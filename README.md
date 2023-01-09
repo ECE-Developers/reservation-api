@@ -66,10 +66,13 @@ $ npm run start:dev
 
 ```bash
 # 이미지 파일 생성
-$ docker build {USERNAME/IMAGENAME} .
+$ docker build -t {USERNAME/IMAGENAME} .
 
-# docker-compose
+# 실행
 $ docker-compose up -d
+
+# 종료
+$ docker-compose down
 ```
 
 - docker를 사용하여 app을 실행시킵니다.
