@@ -10,7 +10,7 @@ on:
 
 defaults:
   run:
-    working-directory: ./hello-typeorm
+    working-directory: .
 
 jobs:
   node_CI:
