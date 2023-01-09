@@ -46,6 +46,10 @@ $ npm run start
 
 ```bash
 $ npm test
+
+$ npm run test:e2e
+
+$ npm run test:cov
 ```
 
 - watch 모드로 실행하기 때문에 개발 환경에서 사용합니다.
