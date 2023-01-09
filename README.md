@@ -61,3 +61,15 @@ $ npm run start:dev
 ```
 
 - watch 모드로 실행하기 때문에 개발 환경에서 사용합니다.
+
+### docker를 사용하는 경우
+
+```bash
+# 이미지 파일 생성
+$ docker build {USERNAME/IMAGENAME} .
+
+# docker-compose
+$ docker-compose up -d
+```
+
+- docker를 사용하여 app을 실행시킵니다.
