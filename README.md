@@ -11,14 +11,18 @@
 - node: v18.7.0
 - npm: 9.1.1
 
-Checking Version
+Version Checking
+
 ```bash
 $ node -v
 $ npm -v
 ```
+
 ## Env Setting
-해당 레포지토리는 redis와 같은 마이크로 서비스를 사용합니다. 멀티 컨테이너 체제를 docker-compose
+
+해당 레포지토리는 redis와 같은 마이크로 서비스를 사용합니다. 멀티컨테이너 체제를 docker-compose
 를 통해 환경 변수를 연결하여 사용합니다.
+
 1. 루트 디렉토리에 .env 파일 생성
 2. .env.example에 있는 내용을 복사
 3. 환경 변수 설정
