@@ -13,8 +13,8 @@ export class UserController {
     description: '유저의 정보를 반환합니다.',
   })
   @ApiOperation({ summary: 'user의 정보를 반환합니다.' })
-  findUser(@Param() id: number) {
-    return this.userService.findUser(id);
+  getUserOne(@Param() id: number) {
+    return this.userService.getUserOne(id);
   }
 
   @Post()

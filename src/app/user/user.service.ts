@@ -5,11 +5,11 @@ import { UserRepository } from './user.repository';
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  findUser(id: number) {
+  getUserOne(id: number) {
     return this.userRepository.getUserOne(id);
   }
 
   createUser(id: number) {
-    return this.userRepository.makeUserOne(id);
+    return this.userRepository.createUser(id);
   }
 }
