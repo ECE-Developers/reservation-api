@@ -6,7 +6,7 @@ export class UserRepository {
     return 'getUserOne';
   }
 
-  makeUserOne(id: number) {
-    return 'makeUserOne';
+  createUser(id: number) {
+    return 'createUser';
   }
 }
