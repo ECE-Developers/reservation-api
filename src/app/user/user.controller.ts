@@ -7,17 +7,17 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get()
+  @Get(':id')
   @ApiResponse({
     status: 200,
-    description: '유저의 정보를 반환합니다.',
+    description: 'user의 정보를 반환합니다.',
   })
   @ApiOperation({ summary: 'user의 정보를 조회합니다.' })
   getUserOne(@Param() id: number) {
     return this.userService.getUserOne(id);
   }
 
-  @Post()
+  @Post(':id')
   @ApiResponse({
     status: 201,
     description: 'user가 생성되었습니다.',
@@ -27,7 +27,7 @@ export class UserController {
     return this.userService.createUser(id);
   }
 
-  @Delete()
+  @Delete(':id')
   @ApiResponse({
     status: 200,
     description: 'user가 삭제됐습니다.',
@@ -37,7 +37,7 @@ export class UserController {
     return this.userService.deleteUser(id);
   }
 
-  @Patch()
+  @Patch(':id')
   @ApiResponse({
     status: 200,
     description: 'user의 정보가 갱신되었습니다.',
