@@ -1,39 +1,63 @@
 {
-  "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:085153792617:task-definition/reservation-api-task:1",
+  "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:085153792617:task-definition/ecs-task-definition:1",
   "containerDefinitions": [
     {
       "name": "reservation-api-container",
       "image": "085153792617.dkr.ecr.ap-northeast-2.amazonaws.com/reservation-api",
       "cpu": 0,
-      "memoryReservation": 500,
+      "memory": 2048,
+      "links": [],
       "portMappings": [
         {
-          "containerPort": 3000,
-          "hostPort": 3000,
-          "protocol": "tcp"
+          "name": "reservation-api-container-80-tcp",
+          "containerPort": 80,
+          "hostPort": 80,
+          "protocol": "tcp",
+          "appProtocol": "http"
         },
         {
+          "name": "reservation-api-container-5432-tcp",
           "containerPort": 5432,
           "hostPort": 5432,
-          "protocol": "tcp"
+          "protocol": "tcp",
+          "appProtocol": "http"
         },
         {
+          "name": "reservation-api-container-6379-tcp",
           "containerPort": 6379,
           "hostPort": 6379,
-          "protocol": "tcp"
+          "protocol": "tcp",
+          "appProtocol": "http"
+        },
+        {
+          "name": "reservation-api-container-3000-tcp",
+          "containerPort": 3000,
+          "hostPort": 3000,
+          "protocol": "tcp",
+          "appProtocol": "http"
         }
       ],
       "essential": true,
       "entryPoint": [],
       "command": [],
       "environment": [],
+      "environmentFiles": [],
       "mountPoints": [],
-      "volumesFrom": []
+      "volumesFrom": [],
+      "secrets": [],
+      "dnsServers": [],
+      "dnsSearchDomains": [],
+      "extraHosts": [],
+      "dockerSecurityOptions": [],
+      "dockerLabels": {},
+      "ulimits": [],
+      "systemControls": []
     }
   ],
-  "family": "reservation-api-task",
+  "family": "ecs-task-definition",
   "taskRoleArn": "arn:aws:iam::085153792617:role/reservation-api-role",
   "executionRoleArn": "arn:aws:iam::085153792617:role/reservation-api-role",
+  "networkMode": "awsvpc",
   "revision": 1,
   "volumes": [],
   "status": "ACTIVE",
@@ -42,26 +66,45 @@
       "name": "com.amazonaws.ecs.capability.ecr-auth"
     },
     {
-      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.17"
     },
     {
       "name": "com.amazonaws.ecs.capability.task-iam-role"
     },
     {
       "name": "ecs.capability.execution-role-ecr-pull"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+    },
+    {
+      "name": "ecs.capability.task-eni"
     }
   ],
   "placementConstraints": [],
   "compatibilities": [
-    "EXTERNAL",
-    "EC2"
+    "EC2",
+    "FARGATE"
   ],
   "requiresCompatibilities": [
     "EC2"
   ],
   "cpu": "1024",
-  "memory": "1024",
-  "registeredAt": "2023-01-12T04:14:50.775Z",
+  "memory": "2048",
+  "runtimePlatform": {
+    "cpuArchitecture": "ARM64",
+    "operatingSystemFamily": "LINUX"
+  },
+  "registeredAt": "2023-01-12T06:21:00.316Z",
   "registeredBy": "arn:aws:iam::085153792617:root",
-  "tags": []
+  "tags": [
+    {
+      "key": "ecs:taskDefinition:createdFrom",
+      "value": "ecs-console-v2"
+    },
+    {
+      "key": "ecs:taskDefinition:stackId",
+      "value": "arn:aws:cloudformation:ap-northeast-2:085153792617:stack/ECS-Console-V2-TaskDefinition-eea8706e-371d-4931-91f6-aa414c2aca18/4593ff50-9241-11ed-b8d1-06e790713382"
+    }
+  ]
 }
