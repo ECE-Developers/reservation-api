@@ -10,7 +10,7 @@ export class UserController {
   @Get()
   @ApiResponse({
     status: 200,
-    description: '유저의 정보를 반환합니다.',
+    description: 'user의 정보를 반환합니다.',
   })
   @ApiOperation({ summary: 'user의 정보를 조회합니다.' })
   getUserOne(@Param() id: number) {
