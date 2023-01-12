@@ -26,4 +26,16 @@ describe('UserController', () => {
       expect(userController.getUserOne(1)).toBe('getUserOne');
     });
   });
+
+  describe('deleteUser', () => {
+    it('should return "deleteUser"', () => {
+      expect(userController.deleteUser(1)).toBe('deleteUser');
+    });
+  });
+
+  describe('patchUser', () => {
+    it('should return "patchUser"', () => {
+      expect(userController.patchUser(1)).toBe('patchUser');
+    });
+  });
 });
