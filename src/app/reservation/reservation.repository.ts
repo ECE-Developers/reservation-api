@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class ReservationRepository {
   getReservations() {
-    return 'getReservation';
+    return 'getReservations';
   }
 
   getReservationOne(id: number) {
