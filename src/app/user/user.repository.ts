@@ -9,4 +9,12 @@ export class UserRepository {
   createUser(id: number) {
     return 'createUser';
   }
+
+  deleteUser(id: number) {
+    return 'deleteUser';
+  }
+
+  patchUser(id: number) {
+    return 'patchUser';
+  }
 }

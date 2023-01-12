@@ -12,4 +12,12 @@ export class UserService {
   createUser(id: number) {
     return this.userRepository.createUser(id);
   }
+
+  deleteUser(id: number) {
+    return this.userRepository.deleteUser(id);
+  }
+
+  patchUser(id: number) {
+    return this.userRepository.patchUser(id);
+  }
 }
