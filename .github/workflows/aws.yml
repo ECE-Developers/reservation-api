@@ -9,7 +9,7 @@ env:
   ECR_REPOSITORY: reservation-api          
   ECS_SERVICE: reservation-api
   ECS_CLUSTER: reservation-api
-  ECS_TASK_DEFINITION: reservation-api-task:1 
+  ECS_TASK_DEFINITION: task-definition.json
   CONTAINER_NAME: reservation-api-container        
                                                
 
