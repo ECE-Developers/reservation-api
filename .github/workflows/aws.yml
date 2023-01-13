@@ -8,8 +8,8 @@ env:
   AWS_REGION: ap-northeast-2                 
   ECR_REPOSITORY: reservation-api          
   ECS_SERVICE: reservation-api
-  ECS_CLUSTER: reservation-api
-  ECS_TASK_DEFINITION: ecs-task-definition.json
+  ECS_CLUSTER: reservation-api-cluster
+  ECS_TASK_DEFINITION: task-definition.json
   CONTAINER_NAME: reservation-api-container
                                                
 
@@ -54,7 +54,7 @@ jobs:
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: ecs-task-definition.json
+        task-definition: task-definition.json
         container-name: reservation-api-container
         image: ${{ steps.build-image.outputs.image }}
 
