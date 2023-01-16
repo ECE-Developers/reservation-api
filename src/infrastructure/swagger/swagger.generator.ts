@@ -6,7 +6,6 @@ const document = new DocumentBuilder()
   .setTitle(`Reservation API`)
   .setDescription(`Reservation API docs`)
   .setContact('ECE-Developers', 'www.ece.kr', 'marsboy0619@gmail.com')
-  .addServer(process.env.APP_URL || 'http://localhost:3000')
   .setVersion('0.0.1');
 
 tags.forEach((tag) => document.addTag(tag.name, tag.description));

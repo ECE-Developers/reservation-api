@@ -5,7 +5,7 @@ import { OkSuccess } from '../../libs/response/status-code/ok.success';
 import { CreatedSuccess } from '../../libs/response/status-code/created.success';
 
 @Controller('auth')
-@ApiTags()
+@ApiTags('Auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
