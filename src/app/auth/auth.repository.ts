@@ -7,6 +7,6 @@ export class AuthRepository {
   }
 
   signIn() {
-    return 'singIn';
+    return 'signIn';
   }
 }

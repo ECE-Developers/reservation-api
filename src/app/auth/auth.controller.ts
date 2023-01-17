@@ -27,7 +27,7 @@ export class AuthController {
     type: CreatedSuccess,
   })
   @ApiOperation({ summary: '회원가입 합니다.' })
-  singUp() {
+  signUp() {
     return this.authService.signUp();
   }
 }
