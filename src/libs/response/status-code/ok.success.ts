@@ -12,8 +12,8 @@ export class OkSuccess {
   @ApiProperty({
     type: 'string',
     title: '응답 메시지',
-    example: '해당 bottle의 read가 true로 변경되었습니다.',
-    description: '200 response입니다.',
+    example: '200 Ok',
+    description: '200 Ok',
   })
   message: string;
 }

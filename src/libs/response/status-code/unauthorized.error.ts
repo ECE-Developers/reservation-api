@@ -12,8 +12,8 @@ export class UnauthorizedError {
   @ApiProperty({
     type: 'string',
     title: '응답 메시지',
-    example: 'Bad Request',
-    description: 'Bad Request',
+    example: '401 Unauthorized',
+    description: '401 Unauthorized',
   })
   message: string;
 }
