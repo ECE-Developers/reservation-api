@@ -4,21 +4,22 @@ import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { OkSuccess } from '../../libs/response/status-code/ok.success';
 import { CreatedSuccess } from '../../libs/response/status-code/created.success';
 import { IdRequest } from '../../libs/request/id.request';
-import { AuthRequest } from '../../libs/request/auth.request';
+import { ReadAuthRequest } from '../../libs/request/read-auth.request';
+import { CreateAuthRequest } from '../../libs/request/create-auth.request';
 
 @Controller('auth')
 @ApiTags('Auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Get()
+  @Get(':id&:password')
   @ApiResponse({
     status: 200,
     description: '로그인에 성공했습니다.',
     type: OkSuccess,
   })
   @ApiOperation({ summary: '계정 로그인' })
-  signIn(@Body() body: AuthRequest) {
+  signIn(@Param() body: ReadAuthRequest) {
     return this.authService.signIn(body);
   }
 
@@ -29,7 +30,7 @@ export class AuthController {
     type: CreatedSuccess,
   })
   @ApiOperation({ summary: '계정 생성' })
-  signUp(@Body() body: AuthRequest) {
+  signUp(@Body() body: CreateAuthRequest) {
     return this.authService.signUp(body);
   }
 

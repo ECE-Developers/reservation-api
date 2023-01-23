@@ -1,17 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { AuthRepository } from './auth.repository';
 import { IdRequest } from '../../libs/request/id.request';
-import { AuthRequest } from '../../libs/request/auth.request';
+import { ReadAuthRequest } from '../../libs/request/read-auth.request';
+import { CreateAuthRequest } from '../../libs/request/create-auth.request';
 
 @Injectable()
 export class AuthService {
   constructor(private readonly authRepository: AuthRepository) {}
 
-  signIn(body: AuthRequest) {
+  signIn(body: ReadAuthRequest) {
     return this.authRepository.signIn(body);
   }
 
-  signUp(body: AuthRequest) {
+  signUp(body: CreateAuthRequest) {
     return this.authRepository.signUp(body);
   }
 
