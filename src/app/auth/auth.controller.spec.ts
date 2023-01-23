@@ -3,6 +3,7 @@ import { TestingModule, Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { AuthRepository } from './auth.repository';
 import { IdRequest } from '../../libs/request/id.request';
+import { AuthRequest } from '../../libs/request/auth.request';
 
 describe('authController', () => {
   let authController: AuthController;
@@ -16,15 +17,17 @@ describe('authController', () => {
     authController = auth.get<AuthController>(AuthController);
   });
 
+  const body = new AuthRequest();
+
   describe('signUp', () => {
     it('should return "signUp"', () => {
-      expect(authController.signUp()).toBe('signUp');
+      expect(authController.signUp(body)).toBe('signUp');
     });
   });
 
   describe('signIn', () => {
     it('should return "signIn"', () => {
-      expect(authController.signIn()).toBe('signIn');
+      expect(authController.signIn(body)).toBe('signIn');
     });
   });
 

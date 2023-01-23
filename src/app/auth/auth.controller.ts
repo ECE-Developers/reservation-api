@@ -1,9 +1,10 @@
 import { AuthService } from './auth.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { OkSuccess } from '../../libs/response/status-code/ok.success';
 import { CreatedSuccess } from '../../libs/response/status-code/created.success';
 import { IdRequest } from '../../libs/request/id.request';
+import { AuthRequest } from '../../libs/request/auth.request';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -17,8 +18,8 @@ export class AuthController {
     type: OkSuccess,
   })
   @ApiOperation({ summary: '계정 로그인' })
-  signIn() {
-    return this.authService.signIn();
+  signIn(@Body() body: AuthRequest) {
+    return this.authService.signIn(body);
   }
 
   @Post()
@@ -28,8 +29,8 @@ export class AuthController {
     type: CreatedSuccess,
   })
   @ApiOperation({ summary: '계정 생성' })
-  signUp() {
-    return this.authService.signUp();
+  signUp(@Body() body: AuthRequest) {
+    return this.authService.signUp(body);
   }
 
   @Delete(':id')
@@ -39,7 +40,7 @@ export class AuthController {
     type: OkSuccess,
   })
   @ApiOperation({ summary: '계정 삭제' })
-  deleteAuth(@Param() id: IdRequest) {
-    return this.authService.deleteAuth(id);
+  deleteAuth(@Param() param: IdRequest) {
+    return this.authService.deleteAuth(param);
   }
 }

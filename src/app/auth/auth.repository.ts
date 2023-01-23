@@ -1,17 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { IdRequest } from '../../libs/request/id.request';
+import { AuthRequest } from '../../libs/request/auth.request';
 
 @Injectable()
 export class AuthRepository {
-  signUp() {
+  signUp(body: AuthRequest) {
     return 'signUp';
   }
 
-  signIn() {
+  signIn(body: AuthRequest) {
     return 'signIn';
   }
 
-  deleteAuth(id: IdRequest) {
+  deleteAuth(param: IdRequest) {
     return 'deleteAuth';
   }
 }
