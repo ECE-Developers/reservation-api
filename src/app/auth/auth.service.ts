@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AuthRepository } from './auth.repository';
+import { IdRequest } from '../../libs/request/id.request';
 
 @Injectable()
 export class AuthService {
@@ -11,5 +12,9 @@ export class AuthService {
 
   signIn() {
     return this.authRepository.signIn();
+  }
+
+  deleteAuth(id: IdRequest) {
+    return this.authRepository.deleteAuth(id);
   }
 }

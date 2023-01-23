@@ -2,6 +2,7 @@ import { AuthController } from './auth.controller';
 import { TestingModule, Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { AuthRepository } from './auth.repository';
+import { IdRequest } from '../../libs/request/id.request';
 
 describe('authController', () => {
   let authController: AuthController;
@@ -24,6 +25,14 @@ describe('authController', () => {
   describe('signIn', () => {
     it('should return "signIn"', () => {
       expect(authController.signIn()).toBe('signIn');
+    });
+  });
+
+  const param = new IdRequest();
+  param.id = 1;
+  describe('deleteAuth', () => {
+    it('should return "deleteAuth"', () => {
+      expect(authController.deleteAuth(param)).toBe('deleteAuth');
     });
   });
 });
