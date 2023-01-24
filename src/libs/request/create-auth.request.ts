@@ -5,13 +5,13 @@ import { Expose } from 'class-transformer';
 export class CreateAuthRequest {
   @ApiProperty({
     example: 'marsboy',
-    description: 'auth의 id를 입력합니다.',
+    description: 'auth의 username를 입력합니다.',
     required: true,
   })
   @Expose()
   @IsNotEmpty()
   @IsString()
-  id: string;
+  username: string;
 
   @ApiProperty({
     example: 'iamfrommars',

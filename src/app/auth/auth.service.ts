@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { AuthRepository } from './auth.repository';
 import { deleteAuthRequest } from '../../libs/request/delete-auth.request';
 import { CreateAuthRequest } from '../../libs/request/create-auth.request';
+import { UpdateAuthRequest } from '../../libs/request/update-auth.request';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +12,10 @@ export class AuthService {
     return this.authRepository.signUp(body);
   }
 
-  deleteAuth(param: deleteAuthRequest) {
-    return this.authRepository.deleteAuth(param);
+  updateAuth(body: UpdateAuthRequest) {
+    return this.authRepository.updateAuth(body);
+  }
+  deleteAuth(body: deleteAuthRequest) {
+    return this.authRepository.deleteAuth(body);
   }
 }

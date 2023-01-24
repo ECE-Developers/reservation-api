@@ -5,6 +5,7 @@ import { AuthRepository } from './auth.repository';
 import { deleteAuthRequest } from '../../libs/request/delete-auth.request';
 
 import { CreateAuthRequest } from '../../libs/request/create-auth.request';
+import { UpdateAuthRequest } from '../../libs/request/update-auth.request';
 
 describe('authController', () => {
   let authController: AuthController;
@@ -26,10 +27,18 @@ describe('authController', () => {
     });
   });
 
-  const param = new deleteAuthRequest();
+  const updateBody = new UpdateAuthRequest();
+
+  describe('updateAuth', () => {
+    it('should return "updateAuth"', () => {
+      expect(authController.updateAuth(updateBody)).toBe('updateAuth');
+    });
+  });
+
+  const deleteBody = new deleteAuthRequest();
   describe('deleteAuth', () => {
     it('should return "deleteAuth"', () => {
-      expect(authController.deleteAuth(param)).toBe('deleteAuth');
+      expect(authController.deleteAuth(deleteBody)).toBe('deleteAuth');
     });
   });
 });
