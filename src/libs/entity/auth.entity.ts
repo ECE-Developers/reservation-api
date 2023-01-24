@@ -1,11 +1,8 @@
-import { Column, Entity, Generated, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('auth')
 export class AuthEntity {
-  @Generated('increment')
-  @PrimaryColumn({
-    type: 'bigint',
-  })
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ type: 'varchar', length: 50, nullable: false })

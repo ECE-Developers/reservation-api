@@ -6,7 +6,6 @@ import * as redisStore from 'cache-manager-ioredis';
 import * as process from 'process';
 import { dataSourceConfig } from './data-source';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
 @Module({
   imports: [
     AppModule,
