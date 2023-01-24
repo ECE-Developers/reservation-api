@@ -1,8 +1,17 @@
-import { Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { CreatedSuccess } from '../../libs/response/status-code/created.success';
 import { OkSuccess } from '../../libs/response/status-code/ok.success';
+import { UpdateUserRequest } from '../../libs/request/update-user.request';
 
 @Controller('user')
 @ApiTags('User')
@@ -30,25 +39,14 @@ export class UserController {
     return this.userService.createUser(id);
   }
 
-  @Delete(':id')
+  @Patch()
   @ApiResponse({
     status: 200,
-    description: 'user가 삭제됐습니다.',
+    description: 'user의 정보가 성공적으로 변경됐습니다.',
     type: OkSuccess,
   })
-  @ApiOperation({ summary: 'user의 정보를 삭제합니다.' })
-  deleteUser(@Param() id: number) {
-    return this.userService.deleteUser(id);
-  }
-
-  @Patch(':id')
-  @ApiResponse({
-    status: 200,
-    description: 'user의 정보가 갱신되었습니다.',
-    type: OkSuccess,
-  })
-  @ApiOperation({ summary: 'user의 고유 번호를 교체합니다.' })
-  patchUser(@Param() id: number) {
-    return this.userService.patchUser(id);
+  @ApiOperation({ summary: 'user의 정보를 변경합니다.' })
+  updateUser(@Body() body: UpdateUserRequest) {
+    return this.userService.updateUser(body);
   }
 }

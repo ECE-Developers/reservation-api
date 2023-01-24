@@ -2,6 +2,7 @@ import { UserController } from './user.controller';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
 import { UserRepository } from './user.repository';
+import { UpdateUserRequest } from '../../libs/request/update-user.request';
 
 describe('UserController', () => {
   let userController: UserController;
@@ -27,15 +28,10 @@ describe('UserController', () => {
     });
   });
 
-  describe('deleteUser', () => {
-    it('should return "deleteUser"', () => {
-      expect(userController.deleteUser(1)).toBe('deleteUser');
-    });
-  });
-
-  describe('patchUser', () => {
-    it('should return "patchUser"', () => {
-      expect(userController.patchUser(1)).toBe('patchUser');
+  const updateBody = new UpdateUserRequest();
+  describe('updateUser', () => {
+    it('should return "updateUser"', () => {
+      expect(userController.updateUser(updateBody)).toBe('updateUser');
     });
   });
 });

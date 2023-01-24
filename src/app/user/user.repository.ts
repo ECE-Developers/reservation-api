@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { UpdateUserRequest } from '../../libs/request/update-user.request';
 
 @Injectable()
 export class UserRepository {
@@ -10,11 +11,7 @@ export class UserRepository {
     return 'createUser';
   }
 
-  deleteUser(id: number) {
-    return 'deleteUser';
-  }
-
-  patchUser(id: number) {
-    return 'patchUser';
+  updateUser(body: UpdateUserRequest) {
+    return 'updateUser';
   }
 }
