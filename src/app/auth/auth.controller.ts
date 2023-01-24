@@ -1,28 +1,15 @@
 import { AuthService } from './auth.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Post } from '@nestjs/common';
 import { OkSuccess } from '../../libs/response/status-code/ok.success';
 import { CreatedSuccess } from '../../libs/response/status-code/created.success';
-import { IdRequest } from '../../libs/request/id.request';
-import { ReadAuthRequest } from '../../libs/request/read-auth.request';
+import { deleteAuthRequest } from '../../libs/request/delete-auth.request';
 import { CreateAuthRequest } from '../../libs/request/create-auth.request';
 
 @Controller('auth')
 @ApiTags('Auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
-
-  @Get(':id&:password')
-  @ApiResponse({
-    status: 200,
-    description: '로그인에 성공했습니다.',
-    type: OkSuccess,
-  })
-  @ApiOperation({ summary: '계정 로그인' })
-  signIn(@Param() body: ReadAuthRequest) {
-    return this.authService.signIn(body);
-  }
-
   @Post()
   @ApiResponse({
     status: 201,
@@ -34,14 +21,14 @@ export class AuthController {
     return this.authService.signUp(body);
   }
 
-  @Delete(':id')
+  @Delete()
   @ApiResponse({
     status: 200,
     description: '계정 삭제에 성공했습니다.',
     type: OkSuccess,
   })
   @ApiOperation({ summary: '계정 삭제' })
-  deleteAuth(@Param() param: IdRequest) {
+  deleteAuth(@Body() param: deleteAuthRequest) {
     return this.authService.deleteAuth(param);
   }
 }
