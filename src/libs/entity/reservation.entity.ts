@@ -12,6 +12,9 @@ export class ReservationEntity {
   @Column()
   times: number;
 
+  @Column()
+  image: string;
+
   @Column({ type: 'timestamptz', nullable: false })
   createdAt: Date;
 }
