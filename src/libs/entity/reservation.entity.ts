@@ -9,10 +9,13 @@ export class ReservationEntity {
   @ManyToOne(() => UserEntity)
   student_id: UserEntity;
 
-  @Column()
+  @Column({ type: 'int', nullable: false })
+  table_id: number;
+
+  @Column({ type: 'array', nullable: false })
   times: number;
 
-  @Column()
+  @Column({ type: 'varchar', nullable: false })
   image: string;
 
   @Column({ type: 'timestamptz', nullable: false })
