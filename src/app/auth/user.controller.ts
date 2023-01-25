@@ -1,16 +1,16 @@
-import { AuthService } from './auth.service';
+import { UserService } from './user.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Body, Controller, Delete, Patch, Post } from '@nestjs/common';
 import { OkSuccess } from '../../libs/response/status-code/ok.success';
 import { CreatedSuccess } from '../../libs/response/status-code/created.success';
-import { deleteAuthRequest } from '../../libs/request/delete-auth.request';
-import { CreateAuthRequest } from '../../libs/request/create-auth.request';
-import { UpdateAuthRequest } from '../../libs/request/update-auth.request';
+import { deleteUserRequest } from '../../libs/request/delete-user.request';
+import { CreateUserRequest } from '../../libs/request/create-user.request';
+import { UpdateUserRequest } from '../../libs/request/update-user.request';
 
-@Controller('auth')
-@ApiTags('Auth')
-export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+@Controller('user')
+@ApiTags('User')
+export class UserController {
+  constructor(private readonly authService: UserService) {}
   @Post()
   @ApiResponse({
     status: 201,
@@ -18,7 +18,7 @@ export class AuthController {
     type: CreatedSuccess,
   })
   @ApiOperation({ summary: '계정 생성' })
-  signUp(@Body() body: CreateAuthRequest) {
+  signUp(@Body() body: CreateUserRequest) {
     return this.authService.signUp(body);
   }
 
@@ -29,7 +29,7 @@ export class AuthController {
     type: OkSuccess,
   })
   @ApiOperation({ summary: '계정 정보 변경' })
-  updateAuth(@Body() body: UpdateAuthRequest) {
+  updateAuth(@Body() body: UpdateUserRequest) {
     return this.authService.updateAuth(body);
   }
   @Delete()
@@ -39,7 +39,7 @@ export class AuthController {
     type: OkSuccess,
   })
   @ApiOperation({ summary: '계정 삭제' })
-  deleteAuth(@Body() body: deleteAuthRequest) {
+  deleteAuth(@Body() body: deleteUserRequest) {
     return this.authService.deleteAuth(body);
   }
 }

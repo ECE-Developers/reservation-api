@@ -4,22 +4,22 @@ import { Expose } from 'class-transformer';
 
 export class UpdateUserRequest {
   @ApiProperty({
-    example: '2021440008',
-    description: 'user의 새로운 student_id를 입력합니다.',
+    example: 'marsboy',
+    description: 'auth의 username을 입력합니다.',
     required: true,
   })
   @Expose()
   @IsNotEmpty()
   @IsString()
-  student_id: string;
+  username: string;
 
   @ApiProperty({
-    example: '이강영',
-    description: 'user의 새로운 이름을 입력합니다.',
+    example: 'iamformvenus',
+    description: 'auth의 새로운 password를 입력합니다.',
     required: true,
   })
   @Expose()
   @IsNotEmpty()
   @IsString()
-  name: string;
+  password: string;
 }
