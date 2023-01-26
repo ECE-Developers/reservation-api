@@ -6,14 +6,14 @@ import {
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from '../../libs/multer.options';
-import { PictureService } from './picture.service';
+import { ImageService } from './image.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { OkSuccess } from '../../libs/response/status-code/ok.success';
 
-@Controller('picture')
-@ApiTags('Picture')
-export class PictureController {
-  constructor(private readonly pictureService: PictureService) {}
+@Controller('image')
+@ApiTags('Image')
+export class ImageController {
+  constructor(private readonly imageService: ImageService) {}
 
   @UseInterceptors(FilesInterceptor('images', null, multerOptions))
   @Post()
@@ -24,7 +24,7 @@ export class PictureController {
   })
   @ApiOperation({ summary: '사진 업로드' })
   uploadFiles(@UploadedFiles() files: File[]) {
-    const uploadedFiles: string[] = this.pictureService.uploadFiles(files);
+    const uploadedFiles: string[] = this.imageService.uploadFiles(files);
 
     return {
       status: 200,

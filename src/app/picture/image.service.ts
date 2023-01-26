@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { createImageURL } from '../../libs/multer.options';
 
 @Injectable()
-export class PictureService {
+export class ImageService {
   uploadFiles(files: File[]): string[] {
     const generatedFiles: string[] = [];
 

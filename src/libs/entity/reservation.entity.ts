@@ -12,7 +12,7 @@ export class ReservationEntity {
   @Column({ type: 'int', nullable: false })
   table_id: number;
 
-  @Column({ type: 'array', nullable: false })
+  @Column({ type: 'int', nullable: false })
   times: number;
 
   @Column({ type: 'varchar', nullable: false })
