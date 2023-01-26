@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('auth')
+@Entity('user')
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -16,6 +16,12 @@ export class UserEntity {
 
   @Column({ type: 'varchar', length: 20, nullable: false })
   name!: string;
+
+  @Column({ type: 'varchar', length: 30, nullable: true })
+  email!: string;
+
+  @Column({ type: 'varchar', length: 20, nullable: true, default: 'user' })
+  type!: string;
 
   @Column({ type: 'timestamptz', nullable: false })
   createdAt!: Date;

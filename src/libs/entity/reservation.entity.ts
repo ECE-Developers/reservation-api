@@ -15,9 +15,9 @@ export class ReservationEntity {
   @Column({ type: 'int', nullable: false })
   times: number;
 
-  @Column({ type: 'varchar', nullable: false })
-  image: string;
-
   @Column({ type: 'timestamptz', nullable: false })
   createdAt: Date;
+
+  @Column({ type: 'timestamptz', nullable: false })
+  deletedAt: Date;
 }
