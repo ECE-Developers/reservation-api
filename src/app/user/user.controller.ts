@@ -19,7 +19,7 @@ import { InternalServerErrorError } from '../../libs/response/status-code/intern
 @Controller('user')
 @ApiTags('User')
 export class UserController {
-  constructor(private readonly authService: UserService) {}
+  constructor(private readonly userService: UserService) {}
   @Post()
   @ApiCreatedResponse({
     status: 201,
@@ -38,7 +38,7 @@ export class UserController {
   })
   @ApiOperation({ summary: '계정 생성' })
   signUp(@Body() body: CreateUserRequest) {
-    return this.authService.signUp(body);
+    return this.userService.signUp(body);
   }
 
   @Patch()
@@ -59,7 +59,7 @@ export class UserController {
   })
   @ApiOperation({ summary: '계정 정보 변경' })
   updateAuth(@Body() body: UpdateUserRequest) {
-    return this.authService.updateAuth(body);
+    return this.userService.updateAuth(body);
   }
   @Delete()
   @ApiOkResponse({
@@ -79,6 +79,6 @@ export class UserController {
   })
   @ApiOperation({ summary: '계정 삭제' })
   deleteAuth(@Body() body: deleteUserRequest) {
-    return this.authService.deleteAuth(body);
+    return this.userService.deleteAuth(body);
   }
 }
