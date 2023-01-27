@@ -5,7 +5,7 @@ import { Expose } from 'class-transformer';
 export class UpdateUserRequest {
   @ApiProperty({
     example: 'marsboy',
-    description: 'auth의 username을 입력합니다.',
+    description: 'user의 username을 입력합니다.',
     required: true,
   })
   @Expose()
@@ -15,7 +15,7 @@ export class UpdateUserRequest {
 
   @ApiProperty({
     example: 'iamformvenus',
-    description: 'auth의 새로운 password를 입력합니다.',
+    description: 'user의 새로운 password를 입력합니다.',
     required: true,
   })
   @Expose()
