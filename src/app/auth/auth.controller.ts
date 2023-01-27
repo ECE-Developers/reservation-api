@@ -1,14 +1,21 @@
-import { Controller, Post, UseGuards, Request } from '@nestjs/common';
+import { Controller, Post, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { JwtAuthGuard } from './jwt-auth.guard';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { CreatedSuccess } from '../../libs/response/status-code/created.success';
 
 @Controller('auth')
+@ApiTags('Auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Post('/login')
-  async login(@Request() req) {
-    return this.authService.login(req.user);
+  @ApiCreatedResponse({
+    status: 201,
+    description: 'jwt 토큰이 발급되었습니다.',
+    type: CreatedSuccess,
+  })
+  async login(@Req() request) {
+    console.log(request.body);
+    return this.authService.login(request.body);
   }
 }
