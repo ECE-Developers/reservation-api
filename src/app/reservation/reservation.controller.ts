@@ -1,8 +1,11 @@
-import { Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ReservationService } from './reservation.service';
 import { OkSuccess } from '../../libs/response/status-code/ok.success';
 import { CreatedSuccess } from '../../libs/response/status-code/created.success';
+import { UserIdRequest } from '../../libs/request/user-id.request';
+import { ReservationIdRequest } from '../../libs/request/reservation-id.request';
+import { CreateReservationRequest } from '../../libs/request/create-reservation.request';
 
 @Controller('reservation')
 @ApiTags('Reservation')
@@ -16,8 +19,8 @@ export class ReservationController {
     type: OkSuccess,
   })
   @ApiOperation({ summary: 'reservation을 모두 조회합니다.' })
-  getReservations() {
-    return this.reservationService.getReservations();
+  getReservations(@Param() param: UserIdRequest) {
+    return this.reservationService.getReservations(param);
   }
 
   @Get(':id')
@@ -27,8 +30,8 @@ export class ReservationController {
     type: OkSuccess,
   })
   @ApiOperation({ summary: 'reservation을 하나 조회합니다.' })
-  getReservationOne(@Param() id: number) {
-    return this.reservationService.getReservationOne(id);
+  getReservationOne(@Param() param: ReservationIdRequest) {
+    return this.reservationService.getReservationOne(param);
   }
 
   @Post(':id')
@@ -38,8 +41,8 @@ export class ReservationController {
     type: CreatedSuccess,
   })
   @ApiOperation({ summary: 'reservation을 생성합니다.' })
-  createReservation(@Param() id: number) {
-    return this.reservationService.createReservation(id);
+  createReservation(@Body() body: CreateReservationRequest) {
+    return this.reservationService.createReservation(body);
   }
 
   @Delete(':id')
@@ -49,7 +52,7 @@ export class ReservationController {
     type: OkSuccess,
   })
   @ApiOperation({ summary: 'reservation을 삭제합니다.' })
-  deleteReservation(@Param() id: number) {
-    return this.reservationService.deleteReservation(id);
+  deleteReservation(@Param() param: ReservationIdRequest) {
+    return this.reservationService.deleteReservation(param);
   }
 }

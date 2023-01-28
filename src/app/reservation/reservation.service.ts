@@ -1,23 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { ReservationRepository } from './reservation.repository';
+import { ReservationIdRequest } from '../../libs/request/reservation-id.request';
+import { UserIdRequest } from '../../libs/request/user-id.request';
+import { CreateReservationRequest } from '../../libs/request/create-reservation.request';
 
 @Injectable()
 export class ReservationService {
   constructor(private readonly reservationRepository: ReservationRepository) {}
 
-  getReservations() {
-    return this.reservationRepository.getReservations();
+  getReservations(param: UserIdRequest) {
+    return this.reservationRepository.getReservations(param);
   }
 
-  getReservationOne(id: number) {
-    return this.reservationRepository.getReservationOne(id);
+  getReservationOne(param: ReservationIdRequest) {
+    return this.reservationRepository.getReservationOne(param);
   }
 
-  createReservation(id: number) {
-    return this.reservationRepository.createReservation(id);
+  createReservation(body: CreateReservationRequest) {
+    return this.reservationRepository.createReservation(body);
   }
 
-  deleteReservation(id: number) {
-    return this.reservationRepository.deleteReservation(id);
+  deleteReservation(param: ReservationIdRequest) {
+    return this.reservationRepository.deleteReservation(param);
   }
 }
