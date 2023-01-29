@@ -7,7 +7,7 @@ import { UserIdRequest } from '../../libs/request/user-id.request';
 import { ReservationIdRequest } from '../../libs/request/reservation-id.request';
 import { CreateReservationRequest } from '../../libs/request/create-reservation.request';
 
-@Controller('reservation')
+@Controller('reservations')
 @ApiTags('Reservation')
 export class ReservationController {
   constructor(private readonly reservationService: ReservationService) {}

@@ -16,7 +16,7 @@ import { UpdateUserRequest } from '../../libs/request/update-user.request';
 import { BadRequestError } from '../../libs/response/status-code/bad-request.error';
 import { InternalServerErrorError } from '../../libs/response/status-code/internal-server-error.error';
 
-@Controller('user')
+@Controller('users')
 @ApiTags('User')
 export class UserController {
   constructor(private readonly userService: UserService) {}
