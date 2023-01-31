@@ -7,7 +7,7 @@ export class ReservationEntity {
   id: number;
 
   @ManyToOne(() => UserEntity)
-  studentId: UserEntity;
+  user: UserEntity;
 
   @Column({ type: 'varchar', length: 30, nullable: false })
   tableName: string;

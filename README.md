@@ -87,3 +87,21 @@ $ docker-compose down
 ```
 
 - docker를 사용하여 app을 실행시킵니다.
+
+### 마이그레이션
+
+```bash
+# Entity 변경사항 반영
+$ npm run build
+
+# DB migration
+$ npm run typeorm migration:generate -- ./src/migrations/{migration_name} -d ./src/data-source.ts
+
+# DB up
+$ npm run typeorm migration:run -- -d ./src/data-source.ts
+
+# DB down
+$ npm run typeorm migration:revert -- -d ./src/data-source.ts
+```
+
+- typeorm을 사용하여 migration합니다.
