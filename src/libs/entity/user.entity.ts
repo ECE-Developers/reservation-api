@@ -12,7 +12,7 @@ export class UserEntity {
   password!: string;
 
   @Column({ type: 'varchar', length: 10, nullable: false, unique: true })
-  student_id!: string;
+  studentId!: string;
 
   @Column({ type: 'varchar', length: 20, nullable: false })
   name!: string;

@@ -7,13 +7,13 @@ export class ReservationEntity {
   id: number;
 
   @ManyToOne(() => UserEntity)
-  student_id: UserEntity;
+  studentId: UserEntity;
 
-  @Column({ type: 'int', nullable: false })
-  table_id: number;
+  @Column({ type: 'varchar', length: 30, nullable: false })
+  tableName: string;
 
-  @Column({ type: 'int', nullable: false })
-  times: number;
+  @Column({ type: 'int', array: true, nullable: false })
+  times: number[];
 
   @Column({ type: 'timestamptz', nullable: false })
   createdAt: Date;
