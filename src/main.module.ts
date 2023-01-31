@@ -10,7 +10,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   imports: [
     AppModule,
     InfrastructureModule,
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true, cache: true }),
     CacheModule.register({
       isGlobal: true,
       store: redisStore,

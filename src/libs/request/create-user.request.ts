@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
 import { Expose } from 'class-transformer';
+import { UserEntity } from '../entity/user.entity';
 
 export class CreateUserRequest {
   @ApiProperty({
@@ -30,7 +31,7 @@ export class CreateUserRequest {
   })
   @Expose()
   @IsNotEmpty()
-  student_id: number;
+  student_id: string;
 
   @ApiProperty({
     example: '강형준',
@@ -41,4 +42,8 @@ export class CreateUserRequest {
   @IsNotEmpty()
   @IsString()
   name: string;
+
+  toCreateUserEntity(dto: CreateUserRequest): Promise<UserEntity> {
+    return UserEntity.createUserEntity(dto);
+  }
 }
