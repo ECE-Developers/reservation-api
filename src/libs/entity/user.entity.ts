@@ -1,5 +1,4 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { CreateUserRequest } from '../request/create-user.request';
 
 @Entity('user')
 export class UserEntity {
@@ -29,15 +28,4 @@ export class UserEntity {
 
   @Column({ type: 'timestamptz', nullable: false })
   updatedAt!: Date;
-
-  static async createUserEntity(dto: CreateUserRequest): Promise<UserEntity> {
-    const userData = new UserEntity();
-
-    userData.username = dto.username;
-    userData.password = dto.password;
-    userData.name = dto.name;
-    userData.studentId = dto.student_id;
-
-    return userData;
-  }
 }
