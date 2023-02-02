@@ -12,8 +12,8 @@ export class OkSuccess {
   @ApiProperty({
     type: 'string',
     title: '응답 메시지',
-    example: '200 Ok',
-    description: '200 Ok',
+    example: 'Ok',
+    description: 'Ok',
   })
   message: string;
 }
