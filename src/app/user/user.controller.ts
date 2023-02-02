@@ -19,6 +19,7 @@ import { BadRequestError } from '../../libs/response/status-code/bad-request.err
 import { InternalServerErrorError } from '../../libs/response/status-code/internal-server-error.error';
 import { UnauthorizedError } from '../../libs/response/status-code/unauthorized.error';
 import { NotFoundError } from '../../libs/response/status-code/not-found.error';
+import { CreateUserResponse } from '../../libs/response/users/create-user.response';
 
 @Controller('users')
 @ApiTags('User')
@@ -28,7 +29,7 @@ export class UserController {
   @ApiCreatedResponse({
     status: 201,
     description: '회원 가입에 성공한 경우',
-    type: CreatedSuccess,
+    type: CreateUserResponse,
   })
   @ApiBadRequestResponse({
     status: 400,
