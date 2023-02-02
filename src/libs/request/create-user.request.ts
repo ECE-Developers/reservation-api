@@ -24,15 +24,6 @@ export class CreateUserRequest {
   password: string;
 
   @ApiProperty({
-    example: '2021440008',
-    description: 'user의 student id를 입력합니다.',
-    required: true,
-  })
-  @Expose()
-  @IsNotEmpty()
-  student_id: number;
-
-  @ApiProperty({
     example: '강형준',
     description: 'user의 name을 입력합니다.',
     required: true,
@@ -41,4 +32,14 @@ export class CreateUserRequest {
   @IsNotEmpty()
   @IsString()
   name: string;
+
+  @ApiProperty({
+    example: '2021440008',
+    description: 'user의 student id를 입력합니다.',
+    required: true,
+  })
+  @Expose()
+  @IsString()
+  @IsNotEmpty()
+  student_id: string;
 }
