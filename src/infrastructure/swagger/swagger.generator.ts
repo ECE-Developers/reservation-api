@@ -2,8 +2,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { tags } from './swagger.tags';
 
 const document = new DocumentBuilder()
-  .setTitle(`Reservation API`)
-  .setDescription(`Reservation API docs`)
+  .setTitle(`ECE - Reservation API`)
+  .setDescription(`Reservation API 문서입니다.`)
   .setContact('ECE-Developers', 'www.ece.kr', 'marsboy0619@gmail.com')
   .setVersion('0.0.1')
   .addBearerAuth(
