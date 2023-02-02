@@ -13,7 +13,14 @@ export class CreateReservationRequest {
   id: number;
 
   @ApiProperty({
-    example: '[8,9,10,11,17,18]',
+    example: 'table_1',
+    description: '어떤 table인지 입력합니다.',
+    required: true,
+  })
+  table_name: string;
+
+  @ApiProperty({
+    example: '[8,9,17,18]',
     description: 'reservation의 times를 배열로 입력합니다.',
     required: true,
   })

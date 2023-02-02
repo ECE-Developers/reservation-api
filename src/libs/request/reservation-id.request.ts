@@ -5,10 +5,10 @@ import { Expose } from 'class-transformer';
 export class ReservationIdRequest {
   @ApiProperty({
     example: '1',
-    description: 'reservation의 id를 입력합니다.',
+    description: 'reservation을 조회할 user의 id를 입력합니다.',
     required: true,
   })
   @Expose()
   @IsNotEmpty()
-  id: number;
+  user_id: number;
 }
