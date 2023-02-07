@@ -1,14 +1,14 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class updateCascade1675763356730 implements MigrationInterface {
-    name = 'updateCascade1675763356730'
+export class updateCascade1675763512004 implements MigrationInterface {
+    name = 'updateCascade1675763512004'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`ALTER TABLE "reservation" DROP CONSTRAINT "FK_e219b0a4ff01b85072bfadf3fd7"`);
-        await queryRunner.query(`ALTER TABLE "user" ALTER COLUMN "created_at" SET DEFAULT '"2023-02-07T09:49:17.679Z"'`);
+        await queryRunner.query(`ALTER TABLE "user" ALTER COLUMN "created_at" SET DEFAULT '"2023-02-07T09:51:52.827Z"'`);
         await queryRunner.query(`ALTER TABLE "user" ALTER COLUMN "updated_at" SET NOT NULL`);
-        await queryRunner.query(`ALTER TABLE "user" ALTER COLUMN "updated_at" SET DEFAULT '"2023-02-07T09:49:17.679Z"'`);
-        await queryRunner.query(`ALTER TABLE "reservation" ALTER COLUMN "created_at" SET DEFAULT '"2023-02-07T09:49:17.679Z"'`);
+        await queryRunner.query(`ALTER TABLE "user" ALTER COLUMN "updated_at" SET DEFAULT '"2023-02-07T09:51:52.827Z"'`);
+        await queryRunner.query(`ALTER TABLE "reservation" ALTER COLUMN "created_at" SET DEFAULT '"2023-02-07T09:51:52.827Z"'`);
         await queryRunner.query(`ALTER TABLE "reservation" ADD CONSTRAINT "FK_e219b0a4ff01b85072bfadf3fd7" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
     }
 
