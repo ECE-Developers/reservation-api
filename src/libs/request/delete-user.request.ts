@@ -12,4 +12,14 @@ export class deleteUserRequest {
   @IsNotEmpty()
   @IsString()
   username: string;
+
+  @ApiProperty({
+    example: 'iamfrommars',
+    description: 'user의 password를 입력합니다.',
+    required: true,
+  })
+  @Expose()
+  @IsNotEmpty()
+  @IsString()
+  password: string;
 }

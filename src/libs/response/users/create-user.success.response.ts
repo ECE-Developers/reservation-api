@@ -1,7 +1,7 @@
 import { ApiExtraModels, ApiProperty } from '@nestjs/swagger';
 
 @ApiExtraModels()
-export class CreateUserResponse {
+export class CreateUserSuccessResponse {
   @ApiProperty({
     type: 'number',
     description: 'user의 id입니다.',

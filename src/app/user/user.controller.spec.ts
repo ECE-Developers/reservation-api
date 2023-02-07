@@ -38,7 +38,7 @@ describe('authController', () => {
   const deleteBody = new deleteUserRequest();
   describe('deleteAuth', () => {
     it('should return "deleteAuth"', () => {
-      expect(authController.deleteAuth(deleteBody)).toBe('deleteAuth');
+      expect(authController.deleteUser(deleteBody)).toBe('deleteAuth');
     });
   });
 });

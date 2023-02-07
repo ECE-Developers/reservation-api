@@ -14,16 +14,6 @@ export class UpdateUserRequest {
   username: string;
 
   @ApiProperty({
-    example: 'iamfrommars',
-    description: 'user의 기존 password를 입력합니다.',
-    required: true,
-  })
-  @Expose()
-  @IsNotEmpty()
-  @IsString()
-  password: string;
-
-  @ApiProperty({
     example: '강형준',
     description: 'user의 name을 입력합니다.',
     required: true,

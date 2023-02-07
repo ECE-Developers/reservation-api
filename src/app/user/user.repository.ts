@@ -1,34 +1,53 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { deleteUserRequest } from '../../libs/request/delete-user.request';
 import { CreateUserRequest } from '../../libs/request/create-user.request';
 import { UpdateUserRequest } from '../../libs/request/update-user.request';
 import { DataSource } from 'typeorm';
 import { UserEntity } from '../../libs/entity/user.entity';
+import { NotFoundError } from '../../libs/response/status-code/not-found.error';
 
 @Injectable()
 export class UserRepository {
   constructor(private readonly dataSource: DataSource) {}
-  signUp(body: CreateUserRequest) {
-    return 'signUp';
-  }
 
-  getUserByUsername(username: string) {
+  async getUserOne(userId: number) {
     try {
-      return this.getUserOneByUsername(username);
+      const userOne = await this.getUserOneById(userId);
+      if (!userOne) throw new NotFoundException();
+      return userOne;
     } catch (error) {
       throw error;
     }
   }
-  updateAuth(body: UpdateUserRequest) {
-    return 'updateAuth';
+  async getUserByUsername(username: string) {
+    try {
+      return await this.getUserOneByUsername(username);
+    } catch (error) {
+      throw error;
+    }
   }
 
-  deleteAuth(body: deleteUserRequest) {
-    return 'deleteAuth';
+  async updateUserPassword(dto) {
+    try {
+      const data = {
+        password: dto.new_password,
+      };
+      return await this.updateUser(data, dto.student_id);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteUser(username: string) {
+    try {
+      await this.deleteUserOne(username);
+    } catch (error) {
+      throw error;
+    }
   }
 
   private async getUserOneByUsername(username: string) {
-    return this.dataSource
+    return await this.dataSource
       .createQueryBuilder()
       .select('id')
       .addSelect('name')
@@ -36,5 +55,32 @@ export class UserRepository {
       .from(UserEntity, 'User')
       .where(`User.username =:username`, { username })
       .getRawOne();
+  }
+
+  private async updateUser(dto: object, studentId: string) {
+    await this.dataSource
+      .createQueryBuilder()
+      .update(UserEntity)
+      .set(dto)
+      .where(`student_id =:studentId`, { studentId })
+      .execute();
+  }
+
+  private async getUserOneById(userId: number) {
+    return await this.dataSource
+      .createQueryBuilder()
+      .select()
+      .from(UserEntity, 'User')
+      .where(`User.id =:userId`, { userId })
+      .getRawOne();
+  }
+
+  private async deleteUserOne(username: string) {
+    await this.dataSource
+      .createQueryBuilder()
+      .delete()
+      .from(UserEntity)
+      .where(`username =:username`, { username })
+      .execute();
   }
 }
