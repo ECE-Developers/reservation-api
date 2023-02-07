@@ -11,7 +11,6 @@ import {
 } from '@nestjs/swagger';
 import { Body, Controller, Delete, Patch, Post } from '@nestjs/common';
 import { OkSuccess } from '../../libs/response/status-code/ok.success';
-import { CreatedSuccess } from '../../libs/response/status-code/created.success';
 import { deleteUserRequest } from '../../libs/request/delete-user.request';
 import { CreateUserRequest } from '../../libs/request/create-user.request';
 import { UpdateUserRequest } from '../../libs/request/update-user.request';

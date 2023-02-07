@@ -23,9 +23,9 @@ export class UserEntity {
   @Column({ type: 'varchar', length: 20, nullable: true, default: 'user' })
   type!: string;
 
-  @Column({ type: 'timestamptz', nullable: false })
+  @Column({ type: 'timestamptz', default: new Date() })
   createdAt!: Date;
 
-  @Column({ type: 'timestamptz', nullable: false })
+  @Column({ type: 'timestamptz', nullable: true })
   updatedAt!: Date;
 }

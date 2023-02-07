@@ -15,9 +15,9 @@ export class ReservationEntity {
   @Column({ type: 'int', array: true, nullable: false })
   times: number[];
 
-  @Column({ type: 'timestamptz', nullable: false })
+  @Column({ type: 'timestamptz', default: new Date() })
   createdAt: Date;
 
-  @Column({ type: 'timestamptz', nullable: false })
+  @Column({ type: 'timestamptz', nullable: true })
   deletedAt: Date;
 }
