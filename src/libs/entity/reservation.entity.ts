@@ -6,7 +6,7 @@ export class ReservationEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(() => UserEntity, { onDelete: 'CASCADE' })
   user: UserEntity;
 
   @Column({ type: 'varchar', length: 30, nullable: false })

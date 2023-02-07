@@ -26,6 +26,6 @@ export class UserEntity {
   @Column({ type: 'timestamptz', default: new Date() })
   createdAt!: Date;
 
-  @Column({ type: 'timestamptz', nullable: true })
+  @Column({ type: 'timestamptz', default: new Date() })
   updatedAt!: Date;
 }
