@@ -11,8 +11,8 @@ import {
 } from '@nestjs/swagger';
 import { ReservationService } from './reservation.service';
 import { CreatedSuccess } from '../../libs/response/status-code/created.success';
-import { ReservationIdRequest } from '../../libs/request/reservation-id.request';
-import { CreateReservationRequest } from '../../libs/request/create-reservation.request';
+import { ReservationIdRequest } from '../../libs/request/reservations/reservation-id.request';
+import { CreateReservationRequest } from '../../libs/request/reservations/create-reservation.request';
 import { GetReservationsResponse } from '../../libs/response/reservations/get-reservations.response';
 import { UnauthorizedError } from '../../libs/response/status-code/unauthorized.error';
 import { InternalServerErrorError } from '../../libs/response/status-code/internal-server-error.error';

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { ReservationIdRequest } from '../../libs/request/reservation-id.request';
-import { CreateReservationRequest } from '../../libs/request/create-reservation.request';
+import { ReservationIdRequest } from '../../libs/request/reservations/reservation-id.request';
+import { CreateReservationRequest } from '../../libs/request/reservations/create-reservation.request';
 
 @Injectable()
 export class ReservationRepository {

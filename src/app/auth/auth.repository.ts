@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UsernameRequest } from '../../libs/request/username.request';
+import { UsernameRequest } from '../../libs/request/users/username.request';
 
 @Injectable()
 export class AuthRepository {

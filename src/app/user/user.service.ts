@@ -6,13 +6,13 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { UserRepository } from './user.repository';
-import { deleteUserRequest } from '../../libs/request/delete-user.request';
-import { CreateUserRequest } from '../../libs/request/create-user.request';
-import { UpdateUserRequest } from '../../libs/request/update-user.request';
+import { deleteUserRequest } from '../../libs/request/users/delete-user.request';
+import { CreateUserRequest } from '../../libs/request/users/create-user.request';
+import { UpdateUserRequest } from '../../libs/request/users/update-user.request';
 import { UserEntity } from '../../libs/entity/user.entity';
 import { DataSource } from 'typeorm';
 import { InternalServerErrorError } from '../../libs/response/status-code/internal-server-error.error';
-import { UserIdRequest } from '../../libs/request/user-id.request';
+import { UserIdRequest } from '../../libs/request/users/user-id.request';
 
 export type User = any;
 

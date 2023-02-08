@@ -18,15 +18,15 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { deleteUserRequest } from '../../libs/request/delete-user.request';
-import { CreateUserRequest } from '../../libs/request/create-user.request';
-import { UpdateUserRequest } from '../../libs/request/update-user.request';
+import { deleteUserRequest } from '../../libs/request/users/delete-user.request';
+import { CreateUserRequest } from '../../libs/request/users/create-user.request';
+import { UpdateUserRequest } from '../../libs/request/users/update-user.request';
 import { BadRequestError } from '../../libs/response/status-code/bad-request.error';
 import { InternalServerErrorError } from '../../libs/response/status-code/internal-server-error.error';
 import { UnauthorizedError } from '../../libs/response/status-code/unauthorized.error';
 import { NotFoundError } from '../../libs/response/status-code/not-found.error';
 import { CreateUserSuccessResponse } from '../../libs/response/users/create-user.success.response';
-import { UserIdRequest } from '../../libs/request/user-id.request';
+import { UserIdRequest } from '../../libs/request/users/user-id.request';
 import { ReadUserSuccessResponse } from '../../libs/response/users/read-user.success.response';
 import { UpdateUserSuccessResponse } from '../../libs/response/users/update-user.success.response';
 import { DeleteUserSuccessResponse } from '../../libs/response/users/delete-user.success.response';
