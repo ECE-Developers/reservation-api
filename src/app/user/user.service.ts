@@ -13,9 +13,6 @@ import { UserEntity } from '../../libs/entity/user.entity';
 import { DataSource } from 'typeorm';
 import { InternalServerErrorError } from '../../libs/response/status-code/internal-server-error.error';
 import { UserIdRequest } from '../../libs/request/user-id.request';
-import { NotFoundError } from '../../libs/response/status-code/not-found.error';
-import { BadRequestError } from '../../libs/response/status-code/bad-request.error';
-import { OkSuccess } from '../../libs/response/status-code/ok.success';
 
 export type User = any;
 

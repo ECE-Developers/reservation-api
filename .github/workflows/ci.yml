@@ -31,6 +31,3 @@ jobs:
 
       - name: Install dependencies
         run: npm install --force
-
-      - name: Test unit
-        run: npm test

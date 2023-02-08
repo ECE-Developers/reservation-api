@@ -1,10 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { deleteUserRequest } from '../../libs/request/delete-user.request';
-import { CreateUserRequest } from '../../libs/request/create-user.request';
-import { UpdateUserRequest } from '../../libs/request/update-user.request';
 import { DataSource } from 'typeorm';
 import { UserEntity } from '../../libs/entity/user.entity';
-import { NotFoundError } from '../../libs/response/status-code/not-found.error';
 
 @Injectable()
 export class UserRepository {
