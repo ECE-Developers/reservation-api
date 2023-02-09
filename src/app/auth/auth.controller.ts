@@ -18,8 +18,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from './jwt-auth.guard';
-import { OkSuccess } from '../../libs/response/status-code/ok.success';
+import { JwtAuthGuard } from './jwt/jwt-auth.guard';
 import { LoginRequest } from '../../libs/request/login.request';
 import { UsernameRequest } from '../../libs/request/users/username.request';
 import { InternalServerErrorError } from '../../libs/response/status-code/internal-server-error.error';
@@ -28,6 +27,7 @@ import { BadRequestError } from '../../libs/response/status-code/bad-request.err
 import { JwtResponse } from '../../libs/response/auth/jwt.response';
 import { UnauthorizedError } from '../../libs/response/status-code/unauthorized.error';
 import { AccessTokenResponse } from '../../libs/response/auth/access-token.response';
+import { CheckUsernameSuccessResponse } from '../../libs/response/auth/check-username.success.response';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -36,49 +36,49 @@ export class AuthController {
 
   @Post('/login')
   @ApiOkResponse({
-    status: 200,
-    description: 'jwt 토큰이 발급되었습니다.',
+    status: 201,
+    description: '계정 정보가 일치하는 경우 access_token을 반환합니다.',
     type: AccessTokenResponse,
   })
   @ApiBadRequestResponse({
     status: 400,
-    description: '클라이언트의 데이터 전송 요청이 잘못된 경우',
+    description: 'password가 일치하지 않는 경우 400을 반환합니다.',
     type: BadRequestError,
   })
   @ApiNotFoundResponse({
     status: 404,
-    description: '존재하지 않는 user인 경우',
+    description: 'username이 존재하지 않는 경우 404를 반환합니다.',
     type: NotFoundError,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
-    description: '서버에 에러가 발생한 경우',
+    description: '서버에 에러가 발생한 경우 500을 반환합니다.',
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: 'username과 password를 통해 로그인합니다.' })
-  async login(@Body() body: LoginRequest) {
-    return this.authService.login(body);
+  async login(@Body() dto: LoginRequest) {
+    return this.authService.login(dto);
   }
 
   @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
+  @ApiBearerAuth('access_token')
   @Get('profile')
   @ApiOkResponse({
     status: 200,
-    description: 'jwt 토큰을 반환할 수 있는 경우',
+    description: 'jwt 토큰의 인증이 성공한 경우 username을 반환합니다.',
     type: JwtResponse,
   })
   @ApiUnauthorizedResponse({
     status: 401,
-    description: '인증이 되어있지 않은 경우',
+    description: '인증이 되어있지 않은 경우 401를 반환합니다.',
     type: UnauthorizedError,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
-    description: '서버에 에러가 발생한 경우',
+    description: '서버에 에러가 발생한 경우 500을 반환합니다.',
     type: InternalServerErrorError,
   })
-  @ApiOperation({ summary: 'jwt 토큰을 확인합니다.' })
+  @ApiOperation({ summary: 'jwt access token의 적용 유무를 확인합니다.' })
   getProfile(@Req() req) {
     return req.user;
   }
@@ -86,26 +86,24 @@ export class AuthController {
   @Get(':username')
   @ApiOkResponse({
     status: 200,
-    description: '존재하는 username인 경우',
-    type: OkSuccess,
-  })
-  @ApiBadRequestResponse({
-    status: 400,
-    description: '클라이언트의 데이터 전송 요청이 잘못된 경우',
-    type: BadRequestError,
+    description:
+      '존재하는 username을 입력한 경우 user의 id와 name을 반환합니다.',
+    type: CheckUsernameSuccessResponse,
   })
   @ApiNotFoundResponse({
     status: 404,
-    description: '존재하지 않는 username인 경우',
+    description: '존재하지 않는 username을 입력한 경우 404를 반환합니다.',
     type: NotFoundError,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
-    description: '서버에 에러가 발생했을 경우',
+    description: '서버 에러가 발생했을 경우 500를 반환합니다.',
     type: InternalServerErrorError,
   })
-  @ApiOperation({ summary: 'username의 중복을 확인합니다.' })
-  checkUsername(@Param() param: UsernameRequest) {
-    return this.authService.checkUsername(param);
+  @ApiOperation({
+    summary: 'username을 통해 user의 id와 name을 조회하여 중복을 확인합니다.',
+  })
+  checkUsername(@Param() dto: UsernameRequest) {
+    return this.authService.checkUsername(dto);
   }
 }

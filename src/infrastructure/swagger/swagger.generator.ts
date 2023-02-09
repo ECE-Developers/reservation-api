@@ -12,7 +12,7 @@ const document = new DocumentBuilder()
       scheme: 'bearer',
       bearerFormat: 'JWT',
       name: 'JWT',
-      description: 'Enter JWT token',
+      description: '사용자의 JWT access token을 입력해주세요.',
       in: 'header',
     },
     'access_token',
