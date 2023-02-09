@@ -11,7 +11,6 @@ import {
 } from '@nestjs/swagger';
 import { ReservationService } from './reservation.service';
 import { CreatedSuccess } from '../../libs/response/status-code/created.success';
-import { ReservationIdRequest } from '../../libs/request/reservations/reservation-id.request';
 import { CreateReservationRequest } from '../../libs/request/reservations/create-reservation.request';
 import { GetReservationsResponse } from '../../libs/response/reservations/get-reservations.response';
 import { UnauthorizedError } from '../../libs/response/status-code/unauthorized.error';
@@ -20,6 +19,8 @@ import { BadRequestError } from '../../libs/response/status-code/bad-request.err
 import { NotFoundError } from '../../libs/response/status-code/not-found.error';
 import { GetUserReservationsResponse } from '../../libs/response/reservations/get-user-reservations.response';
 import { DeleteReservationResponse } from '../../libs/response/reservations/delete-reservation.response';
+import { ReservationUserIdRequest } from '../../libs/request/reservations/reservation-user-id.request';
+import { ReservationIdRequest } from '../../libs/request/reservations/reservation-id.request';
 
 @Controller('reservations')
 @ApiTags('Reservation')
@@ -48,7 +49,7 @@ export class ReservationController {
     return this.reservationService.getReservations();
   }
 
-  @Post()
+  @Post(':user_id')
   @ApiCreatedResponse({
     description: 'reservation이 생성되었습니다.',
     type: CreatedSuccess,
@@ -66,8 +67,11 @@ export class ReservationController {
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: 'reservation을 생성합니다.' })
-  createReservation(@Body() body: CreateReservationRequest) {
-    return this.reservationService.createReservation(body);
+  createReservation(
+    @Body() body: CreateReservationRequest,
+    @Param() param: ReservationUserIdRequest,
+  ) {
+    return this.reservationService.createReservation(body, param);
   }
 
   @Get(':user_id')
@@ -92,8 +96,8 @@ export class ReservationController {
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: 'reservation을 하나 조회합니다.' })
-  getReservationOne(@Param() param: ReservationIdRequest) {
-    return this.reservationService.getReservationOne(param);
+  getReservationOne(@Param() dto: ReservationUserIdRequest) {
+    return this.reservationService.getReservationMany(dto);
   }
 
   @Delete(':reservation_id')

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { ReservationEntity } from './reservation.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -28,4 +29,7 @@ export class UserEntity {
 
   @Column({ type: 'timestamptz', default: new Date() })
   updatedAt!: Date;
+
+  @OneToMany((type) => ReservationEntity, (reservation) => reservation.user)
+  Reservations: ReservationEntity[];
 }

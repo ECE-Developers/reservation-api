@@ -8,9 +8,7 @@ export class UserRepository {
 
   async getUserOne(userId: number) {
     try {
-      const userOne = await this.getUserOneById(userId);
-      if (!userOne) throw new NotFoundException();
-      return userOne;
+      return await this.getUserOneById(userId);
     } catch (error) {
       throw error;
     }

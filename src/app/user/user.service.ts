@@ -11,7 +11,6 @@ import { CreateUserRequest } from '../../libs/request/users/create-user.request'
 import { UpdateUserRequest } from '../../libs/request/users/update-user.request';
 import { UserEntity } from '../../libs/entity/user.entity';
 import { DataSource } from 'typeorm';
-import { InternalServerErrorError } from '../../libs/response/status-code/internal-server-error.error';
 import { UserIdRequest } from '../../libs/request/users/user-id.request';
 
 export type User = any;
@@ -43,7 +42,9 @@ export class UserService {
 
   async getUserOne(dto: UserIdRequest) {
     try {
-      return await this.userRepository.getUserOne(dto.id);
+      const user = await this.userRepository.getUserOne(dto.id);
+      if (!user) throw new NotFoundException('존재하지 않는 사용자입니다.');
+      return user;
     } catch (error) {
       this.logger.error(error);
       if (error instanceof NotFoundException)
@@ -63,7 +64,7 @@ export class UserService {
     } catch (error) {
       this.logger.error(error);
       await queryRunner.rollbackTransaction();
-      throw new InternalServerErrorError();
+      throw new InternalServerErrorException();
     } finally {
       await queryRunner.release();
     }

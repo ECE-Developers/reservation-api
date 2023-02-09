@@ -7,7 +7,7 @@ export class GetUserReservationsResponse {
     description: 'user의 id입니다.',
     example: 1,
   })
-  id: number;
+  user_id: number;
 
   @ApiProperty({
     type: 'json',
