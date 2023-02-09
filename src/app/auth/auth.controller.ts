@@ -42,21 +42,21 @@ export class AuthController {
   })
   @ApiBadRequestResponse({
     status: 400,
-    description: 'password가 일치하지 않는 경우 400을 반환합니다.',
+    description: 'password가 일치하지 않는 경우',
     type: BadRequestError,
   })
   @ApiNotFoundResponse({
     status: 404,
-    description: 'username이 존재하지 않는 경우 404를 반환합니다.',
+    description: 'username이 존재하지 않는 경우',
     type: NotFoundError,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
-    description: '서버에 에러가 발생한 경우 500을 반환합니다.',
+    description: '서버에 에러가 발생한 경우',
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: 'username과 password를 통해 로그인합니다.' })
-  async login(@Body() dto: LoginRequest) {
+  async login(@Body() dto: LoginRequest): Promise<object> {
     return this.authService.login(dto);
   }
 
@@ -70,16 +70,16 @@ export class AuthController {
   })
   @ApiUnauthorizedResponse({
     status: 401,
-    description: '인증이 되어있지 않은 경우 401를 반환합니다.',
+    description: '인증이 되어있지 않은 경우',
     type: UnauthorizedError,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
-    description: '서버에 에러가 발생한 경우 500을 반환합니다.',
+    description: '서버에 에러가 발생한 경우',
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: 'jwt access token의 적용 유무를 확인합니다.' })
-  getProfile(@Req() req) {
+  getProfile(@Req() req): object {
     return req.user;
   }
 
@@ -92,18 +92,18 @@ export class AuthController {
   })
   @ApiNotFoundResponse({
     status: 404,
-    description: '존재하지 않는 username을 입력한 경우 404를 반환합니다.',
+    description: '존재하지 않는 username을 입력한 경우',
     type: NotFoundError,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
-    description: '서버 에러가 발생했을 경우 500를 반환합니다.',
+    description: '서버 에러가 발생했을 경우',
     type: InternalServerErrorError,
   })
   @ApiOperation({
     summary: 'username을 통해 user의 id와 name을 조회하여 중복을 확인합니다.',
   })
-  checkUsername(@Param() dto: UsernameRequest) {
+  checkUsername(@Param() dto: UsernameRequest): object {
     return this.authService.checkUsername(dto);
   }
 }

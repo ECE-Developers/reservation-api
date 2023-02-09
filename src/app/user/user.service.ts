@@ -13,8 +13,6 @@ import { UserEntity } from '../../libs/entity/user.entity';
 import { DataSource } from 'typeorm';
 import { UserIdRequest } from '../../libs/request/users/user-id.request';
 
-export type User = any;
-
 @Injectable()
 export class UserService {
   private logger = new Logger();
@@ -23,24 +21,7 @@ export class UserService {
     private readonly dataSource: DataSource,
   ) {}
 
-  private readonly users = [
-    {
-      userId: 1,
-      username: 'john',
-      password: 'changeme',
-    },
-    {
-      userId: 2,
-      username: 'maria',
-      password: 'guess',
-    },
-  ];
-
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find((user) => user.username === username);
-  }
-
-  async getUserOne(dto: UserIdRequest) {
+  async getUserOne(dto: UserIdRequest): Promise<UserEntity> {
     try {
       const user = await this.userRepository.getUserOne(dto.id);
       if (!user) throw new NotFoundException('존재하지 않는 사용자입니다.');
@@ -52,7 +33,7 @@ export class UserService {
       throw new InternalServerErrorException(error.getResponse());
     }
   }
-  async signUp(dto: CreateUserRequest) {
+  async signUp(dto: CreateUserRequest): Promise<UserEntity> {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
@@ -70,7 +51,7 @@ export class UserService {
     }
   }
 
-  async updateUser(dto: UpdateUserRequest) {
+  async updateUser(dto: UpdateUserRequest): Promise<object> {
     try {
       const user = await this.userRepository.getUserByUsername(dto.username);
       if (!user)
@@ -95,7 +76,7 @@ export class UserService {
       throw new InternalServerErrorException(error.getResponse());
     }
   }
-  async deleteUser(dto: deleteUserRequest) {
+  async deleteUser(dto: deleteUserRequest): Promise<object> {
     try {
       const user = await this.userRepository.getUserByUsername(dto.username);
       if (!user)

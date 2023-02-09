@@ -25,8 +25,10 @@ export class ReservationService {
     return this.reservationRepository.getReservations();
   }
 
-  async getReservationMany(dto: ReservationUserIdRequest) {
+  async getReservationMany(dto: ReservationUserIdRequest): Promise<object> {
     try {
+      const user = await this.reservationRepository.getUserOne(dto.user_id);
+      if (!user) throw new NotFoundException('존재하지 않는 사용자입니다.');
       const reservations = await this.reservationRepository.getReservationMany(
         dto.user_id,
       );
@@ -36,22 +38,26 @@ export class ReservationService {
       };
     } catch (error) {
       this.logger.error(error);
-      throw new InternalServerErrorException('서버에 에러가 발생했습니다.');
+      if (error instanceof NotFoundException)
+        throw new NotFoundException(error.getResponse());
+      throw new InternalServerErrorException(error.getResponse());
     }
   }
 
   async createReservation(
     dto: CreateReservationRequest,
     param: ReservationUserIdRequest,
-  ) {
+  ): Promise<object> {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
       const user = await this.reservationRepository.getUserOne(param.user_id);
       if (!user) throw new NotFoundException('존재하지 않는 사용자입니다.');
+
       await queryRunner.manager.save(this.makeReservationEntity(dto, user));
       await queryRunner.commitTransaction();
+
       return { statusCode: 201, message: 'Created' };
     } catch (error) {
       this.logger.error(error);
@@ -64,14 +70,23 @@ export class ReservationService {
     }
   }
 
-  async deleteReservation(dto: ReservationIdRequest) {
+  async deleteReservation(dto: ReservationIdRequest): Promise<object> {
     try {
+      const reservation = await this.reservationRepository.getReservationOne(
+        dto.reservation_id,
+      );
+      if (!reservation)
+        throw new NotFoundException('존재하지 않는 reservation입니다.');
       await this.reservationRepository.deleteReservation(dto.reservation_id);
+      return {
+        statusCode: 200,
+        message: '해당 reservation이 성공적으로 삭제되었습니다.',
+      };
     } catch (error) {
       this.logger.error(error);
-      throw new InternalServerErrorException(
-        'reservation 삭제에 실패했습니다.',
-      );
+      if (error instanceof NotFoundException)
+        throw new NotFoundException(error.getResponse());
+      throw new InternalServerErrorException(error.getResponse());
     }
   }
 
@@ -84,7 +99,6 @@ export class ReservationService {
     reservation.times = dto.times;
     reservation.date = dto.date;
     reservation.user = user;
-
     return reservation;
   }
 }

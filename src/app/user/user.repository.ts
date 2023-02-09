@@ -6,14 +6,14 @@ import { UserEntity } from '../../libs/entity/user.entity';
 export class UserRepository {
   constructor(private readonly dataSource: DataSource) {}
 
-  async getUserOne(userId: number) {
+  async getUserOne(userId: number): Promise<UserEntity> {
     try {
       return await this.getUserOneById(userId);
     } catch (error) {
       throw error;
     }
   }
-  async getUserByUsername(username: string) {
+  async getUserByUsername(username: string): Promise<any> {
     try {
       return await this.getUserOneByUsername(username);
     } catch (error) {
@@ -26,7 +26,7 @@ export class UserRepository {
       const data = {
         password: dto.new_password,
       };
-      return await this.updateUser(data, dto.student_id);
+      await this.updateUser(data, dto.student_id);
     } catch (error) {
       throw error;
     }
@@ -40,7 +40,7 @@ export class UserRepository {
     }
   }
 
-  private async getUserOneByUsername(username: string) {
+  private async getUserOneByUsername(username: string): Promise<UserEntity> {
     return await this.dataSource
       .createQueryBuilder()
       .select('id')
@@ -60,7 +60,7 @@ export class UserRepository {
       .execute();
   }
 
-  private async getUserOneById(userId: number) {
+  private async getUserOneById(userId: number): Promise<UserEntity> {
     return await this.dataSource
       .createQueryBuilder()
       .select()

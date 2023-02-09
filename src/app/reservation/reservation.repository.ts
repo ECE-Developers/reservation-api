@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { ReservationIdRequest } from '../../libs/request/reservations/reservation-id.request';
 import { DataSource } from 'typeorm';
 import { UserEntity } from '../../libs/entity/user.entity';
 import { ReservationEntity } from '../../libs/entity/reservation.entity';
@@ -19,7 +18,7 @@ export class ReservationRepository {
     }
   }
 
-  async getUserOne(userId: number) {
+  async getUserOne(userId: number): Promise<UserEntity> {
     try {
       return await this.getUserOneByUserId(userId);
     } catch (error) {
@@ -35,7 +34,15 @@ export class ReservationRepository {
     }
   }
 
-  private async getUserOneByUserId(userId: number) {
+  async getReservationOne(reservationId: number): Promise<ReservationEntity> {
+    try {
+      return await this.getReservationById(reservationId);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  private async getUserOneByUserId(userId: number): Promise<UserEntity> {
     return await this.dataSource
       .createQueryBuilder()
       .select()
@@ -58,6 +65,16 @@ export class ReservationRepository {
       .getRawMany();
   }
 
+  private async getReservationById(
+    reservationId: number,
+  ): Promise<ReservationEntity> {
+    return await this.dataSource
+      .createQueryBuilder()
+      .select()
+      .from(ReservationEntity, 'Reservation')
+      .where(`Reservation.id =:ReservationId`, { reservationId })
+      .getRawOne();
+  }
   private async deleteReservationById(reservationId: number) {
     await this.dataSource
       .createQueryBuilder()

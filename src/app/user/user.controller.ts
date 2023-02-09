@@ -33,6 +33,7 @@ import { ReadUserSuccessResponse } from '../../libs/response/users/read-user.suc
 import { UpdateUserSuccessResponse } from '../../libs/response/users/update-user.success.response';
 import { DeleteUserSuccessResponse } from '../../libs/response/users/delete-user.success.response';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
+import { UserEntity } from '../../libs/entity/user.entity';
 
 @Controller('users')
 @ApiTags('User')
@@ -53,8 +54,8 @@ export class UserController {
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: 'user의 정보를 조회합니다.' })
-  getUser(@Param() dto: UserIdRequest) {
-    return this.userService.getUserOne(dto);
+  async getUser(@Param() dto: UserIdRequest): Promise<UserEntity> {
+    return await this.userService.getUserOne(dto);
   }
   @Post()
   @ApiCreatedResponse({
@@ -66,8 +67,8 @@ export class UserController {
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: '계정 생성' })
-  signUp(@Body() dto: CreateUserRequest) {
-    return this.userService.signUp(dto);
+  async signUp(@Body() dto: CreateUserRequest): Promise<UserEntity> {
+    return await this.userService.signUp(dto);
   }
 
   @Patch()
@@ -94,7 +95,7 @@ export class UserController {
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: '계정 비밀번호 변경' })
-  updateUser(@Body() body: UpdateUserRequest) {
+  updateUser(@Body() body: UpdateUserRequest): object {
     return this.userService.updateUser(body);
   }
   @Delete()
@@ -117,7 +118,7 @@ export class UserController {
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: '계정 삭제' })
-  deleteUser(@Body() dto: deleteUserRequest) {
+  deleteUser(@Body() dto: deleteUserRequest): object {
     return this.userService.deleteUser(dto);
   }
 }

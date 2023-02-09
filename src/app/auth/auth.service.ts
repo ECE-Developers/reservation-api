@@ -19,7 +19,7 @@ export class AuthService {
     private authRepository: AuthRepository,
   ) {}
 
-  async login(dto: LoginRequest) {
+  async login(dto: LoginRequest): Promise<object> {
     try {
       const user = await this.validateUser(dto.username, dto.password);
       const payload = { username: user.username, password: user.password };
@@ -36,10 +36,9 @@ export class AuthService {
     }
   }
 
-  async checkUsername(dto: UsernameRequest) {
+  async checkUsername(dto: UsernameRequest): Promise<object> {
     try {
       const user = await this.authRepository.findOne(dto.username);
-      if (!user) throw new NotFoundException('존재하지 않는 사용자입니다.');
       return {
         id: user.id,
         name: user.name,

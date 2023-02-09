@@ -1,6 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
@@ -21,6 +30,7 @@ import { GetUserReservationsResponse } from '../../libs/response/reservations/ge
 import { DeleteReservationResponse } from '../../libs/response/reservations/delete-reservation.response';
 import { ReservationUserIdRequest } from '../../libs/request/reservations/reservation-user-id.request';
 import { ReservationIdRequest } from '../../libs/request/reservations/reservation-id.request';
+import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
 
 @Controller('reservations')
 @ApiTags('Reservation')
@@ -28,6 +38,8 @@ export class ReservationController {
   constructor(private readonly reservationService: ReservationService) {}
 
   @Get()
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access_token')
   @ApiOkResponse({
     description: '모든 reservation입니다.',
     type: GetReservationsResponse,
@@ -50,6 +62,8 @@ export class ReservationController {
   }
 
   @Post(':user_id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access_token')
   @ApiCreatedResponse({
     description: 'reservation이 생성되었습니다.',
     type: CreatedSuccess,
@@ -57,10 +71,6 @@ export class ReservationController {
   @ApiUnauthorizedResponse({
     description: '인증에 실패한 경우',
     type: UnauthorizedError,
-  })
-  @ApiBadRequestResponse({
-    description: '잘못된 클라이언트의 요청인 경우',
-    type: BadRequestError,
   })
   @ApiInternalServerErrorResponse({
     description: '서버에 에러가 발생한 경우',
@@ -70,11 +80,13 @@ export class ReservationController {
   createReservation(
     @Body() body: CreateReservationRequest,
     @Param() param: ReservationUserIdRequest,
-  ) {
+  ): object {
     return this.reservationService.createReservation(body, param);
   }
 
   @Get(':user_id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access_token')
   @ApiOkResponse({
     description: 'user의 id로 조회한 reservation입니다.',
     type: GetUserReservationsResponse,
@@ -82,10 +94,6 @@ export class ReservationController {
   @ApiUnauthorizedResponse({
     description: '인증에 실패한 경우',
     type: UnauthorizedError,
-  })
-  @ApiBadRequestResponse({
-    description: '잘못된 클라이언트의 요청인 경우',
-    type: BadRequestError,
   })
   @ApiNotFoundResponse({
     description: '리소스에 대한 조회가 없는 경우',
@@ -96,11 +104,13 @@ export class ReservationController {
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: 'reservation을 하나 조회합니다.' })
-  getReservationOne(@Param() dto: ReservationUserIdRequest) {
+  getReservationOne(@Param() dto: ReservationUserIdRequest): object {
     return this.reservationService.getReservationMany(dto);
   }
 
   @Delete(':reservation_id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access_token')
   @ApiOkResponse({
     description: 'reservation이 삭제되었습니다.',
     type: DeleteReservationResponse,
@@ -108,10 +118,6 @@ export class ReservationController {
   @ApiUnauthorizedResponse({
     description: '인증에 실패한 경우',
     type: UnauthorizedError,
-  })
-  @ApiBadRequestResponse({
-    description: '잘못된 클라이언트의 요청인 경우',
-    type: BadRequestError,
   })
   @ApiNotFoundResponse({
     description: '리소스에 대한 조회가 없는 경우',
@@ -122,7 +128,7 @@ export class ReservationController {
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: 'reservation을 삭제합니다.' })
-  deleteReservation(@Param() param: ReservationIdRequest) {
+  deleteReservation(@Param() param: ReservationIdRequest): object {
     return this.reservationService.deleteReservation(param);
   }
 }
