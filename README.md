@@ -60,6 +60,7 @@ $ pm2 kill
 ```
 
 - 명령어 수정을 통해 start:prod 커맨드 시에 pm2가 구동되도록 설정했습니다.
+- AWS의 EC2 Ubuntu 22.04.1 LTS 기준입니다.
 
 ## Available Script
 
