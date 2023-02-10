@@ -26,9 +26,9 @@ $ npm -v
 1. 루트 디렉토리에 .env 파일 생성
 2. .env.example에 있는 내용을 복사
 3. 환경 변수 설정
-4. docker-compose up -d 명령어를 통한 멀티 컨테이너 구동
 
 ## Local Setting
+
 ```bash
 # 로컬로 프로젝트 파일 복사
 $ git clone https://github.com/ECE-Developers/reservation-api
@@ -43,12 +43,32 @@ $ npm install
 $ npm run start
 ```
 
+## Production Setting
+
+```bash
+# 환경 변수 설정
+$ vim .env
+
+# pm2를 통한 배포 시작
+$ npm run start:prod
+
+# 프로덕트 로그 관리
+$ pm2 log
+
+# 프로덕트 종료
+$ pm2 kill
+```
+
+- 명령어 수정을 통해 start:prod 커맨드 시에 pm2가 구동되도록 설정했습니다.
+
 ## Available Script
 
 ### 실행
 
 ```bash
 $ npm run start
+
+# npm run start:dev
 ```
 
 - 3000 port에서 app을 실행합니다.
@@ -63,20 +83,12 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-- watch 모드로 실행하기 때문에 개발 환경에서 사용합니다.
-
-### 개발 모드
-
-```bash
-$ npm run start:dev
-```
-
-- watch 모드로 실행하기 때문에 개발 환경에서 사용합니다.
+- app 테스트를 진행합니다.
 
 ### docker를 사용하는 경우
 
 ```bash
-# 이미지 파일 생성
+# 이미지 파일 빌드
 $ docker build -t {USERNAME/IMAGENAME} .
 
 # 실행
@@ -104,4 +116,4 @@ $ npm run typeorm migration:run -- -d ./src/data-source.ts
 $ npm run typeorm migration:revert -- -d ./src/data-source.ts
 ```
 
-- typeorm을 사용하여 migration합니다.
+- nest의 typeorm을 사용하여 migration합니다.
