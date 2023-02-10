@@ -5,7 +5,7 @@ const document = new DocumentBuilder()
   .setTitle(`ECE - Reservation API`)
   .setDescription(`Reservation API 문서입니다.`)
   .setContact('ECE-Developers', 'www.ece.kr', 'marsboy0619@gmail.com')
-  .setVersion('0.0.1')
+  .setVersion('1.0.0')
   .addBearerAuth(
     {
       type: 'http',
