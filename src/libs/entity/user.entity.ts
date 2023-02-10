@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ReservationEntity } from './reservation.entity';
+import * as moment from 'moment/moment';
 
 @Entity('user')
 export class UserEntity {
@@ -24,11 +25,11 @@ export class UserEntity {
   @Column({ type: 'varchar', length: 20, nullable: true, default: 'user' })
   type!: string;
 
-  @Column({ type: 'timestamptz', default: new Date() })
-  createdAt!: Date;
+  @Column({ type: 'varchar', default: moment().format('YYYY-MM-DD') })
+  createdAt!: string;
 
-  @Column({ type: 'timestamptz', default: new Date() })
-  updatedAt!: Date;
+  @Column({ type: 'varchar', default: moment().format('YYYY-MM-DD') })
+  updatedAt!: string;
 
   @OneToMany((type) => ReservationEntity, (reservation) => reservation.user)
   Reservations: ReservationEntity[];

@@ -11,6 +11,7 @@ import { DataSource } from 'typeorm';
 import { ReservationEntity } from '../../libs/entity/reservation.entity';
 import { UserEntity } from '../../libs/entity/user.entity';
 import { ReservationIdRequest } from '../../libs/request/reservations/reservation-id.request';
+import * as moment from 'moment';
 
 @Injectable()
 export class ReservationService {
@@ -21,8 +22,26 @@ export class ReservationService {
     private readonly dataSource: DataSource,
   ) {}
 
-  getReservations() {
-    return this.reservationRepository.getReservations();
+  async getReservations(): Promise<object> {
+    try {
+      const today = await this.reservationRepository.getReservations(
+        moment().format('YYYY-MM-DD'),
+      );
+      const tomorrow = await this.reservationRepository.getReservations(
+        moment().add(1, 'days').format('YYYY-MM-DD'),
+      );
+      const dayAfterTomorrow = await this.reservationRepository.getReservations(
+        moment().add(2, 'days').format('YYYY-MM-DD'),
+      );
+      return {
+        today,
+        tomorrow,
+        dayAfterTomorrow,
+      };
+    } catch (error) {
+      this.logger.error(error);
+      throw new InternalServerErrorException(error.getResponse());
+    }
   }
 
   async getReservationMany(dto: ReservationUserIdRequest): Promise<object> {

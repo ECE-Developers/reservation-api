@@ -2,12 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { UserEntity } from '../../libs/entity/user.entity';
 import { ReservationEntity } from '../../libs/entity/reservation.entity';
+import { addEnumSchema } from '@nestjs/swagger/dist/utils/enum.utils';
 
 @Injectable()
 export class ReservationRepository {
   constructor(private readonly dataSource: DataSource) {}
-  getReservations() {
-    return 'getReservations';
+  async getReservations(date: string): Promise<object[]> {
+    try {
+      return await this.getReservationsByDate(date);
+    } catch (error) {
+      throw error;
+    }
   }
 
   async deleteReservation(reservationId: number) {
@@ -82,5 +87,16 @@ export class ReservationRepository {
       .from(ReservationEntity)
       .where('id =:reservationId', { reservationId })
       .execute();
+  }
+  private async getReservationsByDate(date: string): Promise<object[]> {
+    return await this.dataSource
+      .createQueryBuilder()
+      .select('id')
+      .addSelect('table_name')
+      .addSelect('date')
+      .addSelect('times')
+      .from(ReservationEntity, 'Reservation')
+      .where(`Reservation.date =:date`, { date })
+      .getRawMany();
   }
 }

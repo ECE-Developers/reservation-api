@@ -1,5 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { UserEntity } from './user.entity';
+import * as moment from 'moment/moment';
 
 @Entity('reservation')
 export class ReservationEntity {
@@ -20,9 +21,9 @@ export class ReservationEntity {
   @Column({ type: 'int', array: true, nullable: false })
   times: number[];
 
-  @Column({ type: 'timestamptz', default: new Date() })
-  createdAt: Date;
+  @Column({ type: 'varchar', default: moment().format('YYYY-MM-DD') })
+  createdAt: string;
 
-  @Column({ type: 'timestamptz', nullable: true })
-  deletedAt: Date;
+  @Column({ type: 'varchar', nullable: true })
+  deletedAt: string;
 }

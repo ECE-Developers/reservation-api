@@ -3,48 +3,50 @@ import { ApiExtraModels, ApiProperty } from '@nestjs/swagger';
 @ApiExtraModels()
 export class GetReservationsResponse {
   @ApiProperty({
-    type: 'json',
-    description: 'table_1의 예약 정보입니다.',
-    example: {
-      first_day: {
-        date: '2023-02-02',
-        week: 'Thu',
-        times: [8, 9],
+    type: 'array',
+    description: '오늘의 예약 정보입니다.',
+    example: [
+      {
+        id: 1,
+        table_name: 'table_1',
+        times: [8, 9, 17, 18],
+        date: '2023-02-12',
       },
-      second_day: {
-        date: '2023-02-03',
-        week: 'Sat',
-        times: [10, 11],
+      {
+        id: 2,
+        table_name: 'table_2',
+        times: [8, 9, 17, 18],
+        date: '2023-02-12',
       },
-      third_day: {
-        date: '2023-02-04',
-        week: 'Sun',
-        times: [12, 13],
-      },
-    },
+    ],
   })
-  table_1: JSON;
+  today: object[];
 
   @ApiProperty({
-    type: 'json',
-    description: 'table_2의 예약 정보입니다.',
-    example: {
-      first_day: {
-        date: '2023-02-02',
-        week: 'Thu',
-        times: [12, 13],
+    type: 'array',
+    description: '내일의 예약 정보입니다.',
+    example: [
+      {
+        id: 3,
+        table_name: 'table_1',
+        times: [8, 9, 17, 18],
+        date: '2023-02-12',
       },
-      second_day: {
-        date: '2023-02-03',
-        week: 'Sat',
-        times: [14, 15],
-      },
-      third_day: {
-        date: '2023-02-04',
-        week: 'Sun',
-        times: [16, 17],
-      },
-    },
+    ],
   })
-  table_2: string;
+  tomorrow: string;
+
+  @ApiProperty({
+    type: 'array',
+    description: '내일 모래의 예약 정보입니다.',
+    example: [
+      {
+        id: 4,
+        table_name: 'table_1',
+        times: [8, 9, 17, 18],
+        date: '2023-02-12',
+      },
+    ],
+  })
+  dayAfterTomorrow: string;
 }

@@ -41,23 +41,19 @@ export class ReservationController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth('access_token')
   @ApiOkResponse({
-    description: '모든 reservation입니다.',
+    description: '오늘, 내일, 내일 모래의 모든 reservation입니다.',
     type: GetReservationsResponse,
   })
   @ApiUnauthorizedResponse({
     description: '인증에 실패한 경우',
     type: UnauthorizedError,
   })
-  @ApiBadRequestResponse({
-    description: '잘못된 클라이언트의 요청인 경우',
-    type: BadRequestError,
-  })
   @ApiInternalServerErrorResponse({
     description: '서버에 에러가 발생한 경우',
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: 'reservation을 모두 조회합니다.' })
-  getReservations() {
+  getReservations(): object {
     return this.reservationService.getReservations();
   }
 
