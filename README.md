@@ -59,7 +59,8 @@ $ pm2 log
 $ pm2 kill
 ```
 
-- 명령어 수정을 통해 start:prod 커맨드 시에 pm2가 구동되도록 설정했습니다.
+- Production 환경에서 pm2를 통해 node를 관리합니다.
+- 명령어 수정을 통해 start:prod 커맨드 시에 pm2을 실행하도록 설정했습니다.
 - AWS의 EC2 Ubuntu 22.04.1 LTS 기준입니다.
 
 ## Available Script
@@ -69,7 +70,7 @@ $ pm2 kill
 ```bash
 $ npm run start
 
-# npm run start:dev
+$ npm run start:dev
 ```
 
 - 3000 port에서 app을 실행합니다.
