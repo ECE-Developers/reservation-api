@@ -19,7 +19,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from './jwt/jwt-auth.guard';
-import { LoginRequest } from '../../libs/request/login.request';
+import { LoginRequest } from '../../libs/request/auth/login.request';
 import { UsernameRequest } from '../../libs/request/users/username.request';
 import { InternalServerErrorError } from '../../libs/response/status-code/internal-server-error.error';
 import { NotFoundError } from '../../libs/response/status-code/not-found.error';
