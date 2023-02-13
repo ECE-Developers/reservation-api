@@ -10,6 +10,7 @@ import { AuthRepository } from './auth.repository';
 import { UsernameRequest } from '../../libs/request/users/username.request';
 import { UserEntity } from '../../libs/entity/user.entity';
 import { LoginRequest } from '../../libs/request/auth/login.request';
+import * as argon2 from 'argon2';
 
 @Injectable()
 export class AuthService {
@@ -57,7 +58,7 @@ export class AuthService {
   ): Promise<UserEntity> {
     const user = await this.authRepository.findOne(username);
     if (!user) throw new NotFoundException('존재하지 않는 username입니다.');
-    if (user.password == pass) return user;
+    if (await argon2.verify(user.password, pass)) return user;
     else throw new BadRequestException('password가 일치하지 않습니다.');
   }
 }

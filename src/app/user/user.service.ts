@@ -12,6 +12,7 @@ import { UpdateUserRequest } from '../../libs/request/users/update-user.request'
 import { UserEntity } from '../../libs/entity/user.entity';
 import { DataSource } from 'typeorm';
 import { UserIdRequest } from '../../libs/request/users/user-id.request';
+import * as argon2 from 'argon2';
 
 @Injectable()
 export class UserService {
@@ -39,7 +40,7 @@ export class UserService {
     await queryRunner.startTransaction();
 
     try {
-      await queryRunner.manager.save(this.makeUserEntity(dto));
+      await queryRunner.manager.save(await this.makeUserEntity(dto));
       await queryRunner.commitTransaction();
       return this.userRepository.getUserByUsername(dto.username);
     } catch (error) {
@@ -94,13 +95,12 @@ export class UserService {
     }
   }
 
-  private makeUserEntity(dto: CreateUserRequest): UserEntity {
+  private async makeUserEntity(dto: CreateUserRequest): Promise<UserEntity> {
     const user = new UserEntity();
     user.username = dto.username;
-    user.password = dto.password;
+    user.password = await argon2.hash(dto.password);
     user.name = dto.name;
     user.studentId = dto.student_id;
-
     return user;
   }
 }

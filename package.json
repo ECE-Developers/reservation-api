@@ -34,6 +34,7 @@
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^5.2.1",
     "@nestjs/typeorm": "^9.0.1",
+    "argon2": "^0.30.3",
     "cache-manager": "^5.1.4",
     "cache-manager-ioredis": "^2.1.0",
     "class-transformer": "^0.5.1",
