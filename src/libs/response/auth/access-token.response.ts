@@ -2,6 +2,13 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class AccessTokenResponse {
   @ApiProperty({
+    type: 'number',
+    description: 'user의 id 입니다.',
+    example: 1,
+  })
+  user_id: number;
+
+  @ApiProperty({
     type: 'string',
     description: 'access token 입니다.',
     example:

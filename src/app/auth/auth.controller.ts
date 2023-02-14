@@ -37,7 +37,8 @@ export class AuthController {
   @Post('/login')
   @ApiOkResponse({
     status: 201,
-    description: '계정 정보가 일치하는 경우 access_token을 반환합니다.',
+    description:
+      '계정 정보가 일치하는 경우 access_token과 user_id를 반환합니다.',
     type: AccessTokenResponse,
   })
   @ApiBadRequestResponse({
