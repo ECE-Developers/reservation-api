@@ -41,6 +41,7 @@ export class AuthService {
   async checkUsername(dto: UsernameRequest): Promise<object> {
     try {
       const user = await this.authRepository.findOne(dto.username);
+      if (!user) throw new NotFoundException('존재하지 않는 username입니다.');
       return {
         id: user.id,
         name: user.name,
