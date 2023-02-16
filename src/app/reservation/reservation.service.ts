@@ -10,7 +10,6 @@ import { CreateReservationRequest } from '../../libs/request/reservations/create
 import { DataSource } from 'typeorm';
 import { ReservationEntity } from '../../libs/entity/reservation.entity';
 import { UserEntity } from '../../libs/entity/user.entity';
-import { ReservationIdRequest } from '../../libs/request/reservations/reservation-id.request';
 import * as moment from 'moment';
 
 @Injectable()
@@ -89,14 +88,11 @@ export class ReservationService {
     }
   }
 
-  async deleteReservation(dto: ReservationIdRequest): Promise<object> {
+  async deleteReservation(dto: ReservationUserIdRequest): Promise<object> {
     try {
-      const reservation = await this.reservationRepository.getReservationOne(
-        dto.reservation_id,
-      );
-      if (!reservation)
-        throw new NotFoundException('존재하지 않는 reservation입니다.');
-      await this.reservationRepository.deleteReservation(dto.reservation_id);
+      const user = this.reservationRepository.getUserOne(dto.user_id);
+      if (!user) throw new NotFoundException('존재하지 않는 user입니다.');
+      await this.reservationRepository.deleteReservation(dto.user_id);
       return {
         statusCode: 200,
         message: '해당 reservation이 성공적으로 삭제되었습니다.',

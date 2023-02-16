@@ -8,13 +8,13 @@ export class GetReservationsResponse {
     example: [
       {
         id: 1,
-        table_name: 'table_1',
+        table_name: 'Table1',
         times: [8, 9, 17, 18],
         date: '2023-02-12',
       },
       {
         id: 2,
-        table_name: 'table_2',
+        table_name: 'Table2',
         times: [8, 9, 17, 18],
         date: '2023-02-12',
       },
@@ -28,7 +28,7 @@ export class GetReservationsResponse {
     example: [
       {
         id: 3,
-        table_name: 'table_1',
+        table_name: 'Table1',
         times: [8, 9, 17, 18],
         date: '2023-02-12',
       },
@@ -42,7 +42,7 @@ export class GetReservationsResponse {
     example: [
       {
         id: 4,
-        table_name: 'table_1',
+        table_name: 'Table1',
         times: [8, 9, 17, 18],
         date: '2023-02-12',
       },

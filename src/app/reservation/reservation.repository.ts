@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { UserEntity } from '../../libs/entity/user.entity';
 import { ReservationEntity } from '../../libs/entity/reservation.entity';
-import { addEnumSchema } from '@nestjs/swagger/dist/utils/enum.utils';
 
 @Injectable()
 export class ReservationRepository {
@@ -15,9 +14,9 @@ export class ReservationRepository {
     }
   }
 
-  async deleteReservation(reservationId: number) {
+  async deleteReservation(userId: number) {
     try {
-      await this.deleteReservationById(reservationId);
+      await this.deleteReservationById(userId);
     } catch (error) {
       throw error;
     }
@@ -80,12 +79,12 @@ export class ReservationRepository {
       .where(`Reservation.id =:ReservationId`, { reservationId })
       .getRawOne();
   }
-  private async deleteReservationById(reservationId: number) {
+  private async deleteReservationById(userId: number) {
     await this.dataSource
       .createQueryBuilder()
       .delete()
       .from(ReservationEntity)
-      .where('id =:reservationId', { reservationId })
+      .where('user_id =:userId', { userId })
       .execute();
   }
   private async getReservationsByDate(date: string): Promise<object[]> {
