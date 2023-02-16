@@ -4,7 +4,7 @@ import { Expose } from 'class-transformer';
 
 export class CreateReservationRequest {
   @ApiProperty({
-    example: 'table_1',
+    example: 'Table1',
     description: '어떤 table을 예약할 지 입력합니다.',
     required: true,
   })
