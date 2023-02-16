@@ -8,7 +8,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import {
-  ApiBadRequestResponse,
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
@@ -24,12 +23,10 @@ import { CreateReservationRequest } from '../../libs/request/reservations/create
 import { GetReservationsResponse } from '../../libs/response/reservations/get-reservations.response';
 import { UnauthorizedError } from '../../libs/response/status-code/unauthorized.error';
 import { InternalServerErrorError } from '../../libs/response/status-code/internal-server-error.error';
-import { BadRequestError } from '../../libs/response/status-code/bad-request.error';
 import { NotFoundError } from '../../libs/response/status-code/not-found.error';
 import { GetUserReservationsResponse } from '../../libs/response/reservations/get-user-reservations.response';
 import { DeleteReservationResponse } from '../../libs/response/reservations/delete-reservation.response';
 import { ReservationUserIdRequest } from '../../libs/request/reservations/reservation-user-id.request';
-import { ReservationIdRequest } from '../../libs/request/reservations/reservation-id.request';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
 
 @Controller('reservations')
@@ -104,7 +101,7 @@ export class ReservationController {
     return this.reservationService.getReservationMany(dto);
   }
 
-  @Delete(':reservation_id')
+  @Delete(':user_id')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth('access_token')
   @ApiOkResponse({
@@ -123,8 +120,8 @@ export class ReservationController {
     description: '서버에 에러가 발생한 경우',
     type: InternalServerErrorError,
   })
-  @ApiOperation({ summary: 'reservation을 삭제합니다.' })
-  deleteReservation(@Param() param: ReservationIdRequest): object {
+  @ApiOperation({ summary: 'reservation을 모두 삭제합니다.' })
+  deleteReservation(@Param() param: ReservationUserIdRequest): object {
     return this.reservationService.deleteReservation(param);
   }
 }
