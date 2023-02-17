@@ -24,6 +24,7 @@ export class AuthRepository {
   async updateRefreshToken(userId: number, refreshToken: object) {
     try {
       await this.updateRefreshTokenByUserId(userId, refreshToken);
+      return refreshToken;
     } catch (error) {
       throw error;
     }

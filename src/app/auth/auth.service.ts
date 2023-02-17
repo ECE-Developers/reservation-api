@@ -12,6 +12,7 @@ import { UserEntity } from '../../libs/entity/user.entity';
 import { LoginRequest } from '../../libs/request/auth/login.request';
 import * as argon2 from 'argon2';
 import { jwtConstants } from './jwt/constants';
+import { UserIdRequest } from '../../libs/request/users/user-id.request';
 
 @Injectable()
 export class AuthService {
@@ -59,6 +60,18 @@ export class AuthService {
       if (error instanceof NotFoundException)
         throw new NotFoundException(error.getResponse());
       throw new InternalServerErrorException(error.getResponse());
+    }
+  }
+
+  async removeRefreshToken(dto: UserIdRequest): Promise<object> {
+    try {
+      await this.authRepository.updateRefreshToken(dto.id, {
+        currentHashedRefreshToken: null,
+      });
+      return {};
+    } catch (error) {
+      this.logger.error(error);
+      throw new BadRequestException(error.getResponse());
     }
   }
 
@@ -136,11 +149,5 @@ export class AuthService {
     );
 
     if (isRefreshTokenMatching) return user;
-  }
-
-  async removeRefreshToken(id: number) {
-    return this.authRepository.updateRefreshToken(id, {
-      currentHashedRefreshToken: null,
-    });
   }
 }
