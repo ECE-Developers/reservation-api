@@ -54,7 +54,7 @@ export class AuthRepository {
       .createQueryBuilder()
       .update(UserEntity)
       .set(refreshToken)
-      .where(`id =:user_id`, { userId })
+      .where(`id =:userId`, { userId })
       .execute();
   }
 }

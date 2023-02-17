@@ -32,7 +32,7 @@ export class UserEntity {
   @Column({ type: 'varchar', default: moment().format('YYYY-MM-DD') })
   updatedAt!: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   @Exclude()
   currentHashedRefreshToken?: string;
 

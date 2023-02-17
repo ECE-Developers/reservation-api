@@ -11,7 +11,7 @@ import { UsernameRequest } from '../../libs/request/users/username.request';
 import { UserEntity } from '../../libs/entity/user.entity';
 import { LoginRequest } from '../../libs/request/auth/login.request';
 import * as argon2 from 'argon2';
-import * as process from 'process';
+import { jwtConstants } from './jwt/constants';
 
 @Injectable()
 export class AuthService {
@@ -24,10 +24,17 @@ export class AuthService {
   async login(dto: LoginRequest): Promise<object> {
     try {
       const user = await this.validateUser(dto.username, dto.password);
-      const payload = { username: user.username, password: user.password };
+      const { accessToken, ...accessOption } = this.getCookieWithJwtAccessToken(
+        user.id,
+      );
+      const { refreshToken, ...refreshOption } =
+        this.getCookieWithJwtRefreshToken(user.id);
+
+      await this.setCurrentRefreshToken(refreshToken, user.id);
       return {
         user_id: user.id,
-        access_token: this.jwtService.sign(payload),
+        accessToken,
+        refreshToken,
       };
     } catch (error) {
       this.logger.error(error);
@@ -68,8 +75,8 @@ export class AuthService {
   getCookieWithJwtAccessToken(id: number) {
     const payload = { id };
     const token = this.jwtService.sign(payload, {
-      secret: process.env.JWT_ACCESS_TOKEN_SECRET,
-      expiresIn: `${process.env.JWT_ACCESS_TOKEN_EXPIRATION_TIME}s`,
+      secret: jwtConstants.access_token_secret,
+      expiresIn: `${jwtConstants.access_token_expiration}s`,
     });
 
     return {
@@ -77,15 +84,15 @@ export class AuthService {
       domain: 'localhost',
       path: '/',
       httpOnly: true,
-      maxAge: Number(process.env.JWT_ACCESS_TOKEN_EXPIRATION_TIME) * 1000,
+      maxAge: Number(jwtConstants.access_token_expiration) * 1000,
     };
   }
 
   getCookieWithJwtRefreshToken(id: number) {
     const payload = { id };
     const token = this.jwtService.sign(payload, {
-      secret: process.env.JWT_REFRESH_TOKEN_SECRET,
-      expiresIn: `${process.env.JWT_REFRESH_TOKEN_EXPIRATION_TIME}s`,
+      secret: jwtConstants.refresh_token_secret,
+      expiresIn: `${jwtConstants.refresh_token_expiration}s`,
     });
 
     return {
@@ -93,7 +100,7 @@ export class AuthService {
       domain: 'localhost',
       path: '/',
       httpOnly: true,
-      maxAge: Number(process.env.JWT_REFRESH_TOKEN_EXPIRATION_TIME) * 1000,
+      maxAge: Number(jwtConstants.refresh_token_expiration) * 1000,
     };
   }
 

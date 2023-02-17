@@ -5,6 +5,7 @@ import {
   Param,
   Post,
   Req,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
@@ -28,6 +29,7 @@ import { JwtResponse } from '../../libs/response/auth/jwt.response';
 import { UnauthorizedError } from '../../libs/response/status-code/unauthorized.error';
 import { AccessTokenResponse } from '../../libs/response/auth/access-token.response';
 import { CheckUsernameSuccessResponse } from '../../libs/response/auth/check-username.success.response';
+import { JwtRefreshStrategy } from './jwt/jwt-refresh.strategy';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -59,6 +61,12 @@ export class AuthController {
   @ApiOperation({ summary: 'username과 password를 통해 로그인합니다.' })
   async login(@Body() dto: LoginRequest): Promise<object> {
     return this.authService.login(dto);
+  }
+
+  @UseGuards(JwtRefreshStrategy)
+  @Post('logout')
+  async logOut(@Param() userId: number) {
+    return this.authService.getCookiesForLogOut();
   }
 
   @UseGuards(JwtAuthGuard)
