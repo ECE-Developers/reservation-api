@@ -15,7 +15,18 @@ const document = new DocumentBuilder()
       description: '사용자의 JWT access token을 입력해주세요.',
       in: 'header',
     },
-    'access_token',
+    'accessToken',
+  )
+  .addBearerAuth(
+    {
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+      name: 'JWT',
+      description: '사용자의 JWT refresh token을 입력해주세요.',
+      in: 'cookie',
+    },
+    'refreshToken',
   );
 
 tags.forEach((tag) => document.addTag(tag.name, tag.description));

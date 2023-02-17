@@ -1,6 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ReservationEntity } from './reservation.entity';
 import * as moment from 'moment/moment';
+import { Exclude } from 'class-transformer';
 
 @Entity('user')
 export class UserEntity {
@@ -30,6 +31,10 @@ export class UserEntity {
 
   @Column({ type: 'varchar', default: moment().format('YYYY-MM-DD') })
   updatedAt!: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  @Exclude()
+  currentHashedRefreshToken?: string;
 
   @OneToMany((type) => ReservationEntity, (reservation) => reservation.user)
   Reservations: ReservationEntity[];

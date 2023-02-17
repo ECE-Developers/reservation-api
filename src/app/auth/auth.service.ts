@@ -11,6 +11,8 @@ import { UsernameRequest } from '../../libs/request/users/username.request';
 import { UserEntity } from '../../libs/entity/user.entity';
 import { LoginRequest } from '../../libs/request/auth/login.request';
 import * as argon2 from 'argon2';
+import { jwtConstants } from './jwt/constants';
+import { UserIdRequest } from '../../libs/request/users/user-id.request';
 
 @Injectable()
 export class AuthService {
@@ -23,10 +25,17 @@ export class AuthService {
   async login(dto: LoginRequest): Promise<object> {
     try {
       const user = await this.validateUser(dto.username, dto.password);
-      const payload = { username: user.username, password: user.password };
+      const { accessToken, ...accessOption } = this.getCookieWithJwtAccessToken(
+        user.id,
+      );
+      const { refreshToken, ...refreshOption } =
+        this.getCookieWithJwtRefreshToken(user.id);
+
+      await this.setCurrentRefreshToken(refreshToken, user.id);
       return {
         user_id: user.id,
-        access_token: this.jwtService.sign(payload),
+        accessToken,
+        refreshToken,
       };
     } catch (error) {
       this.logger.error(error);
@@ -40,7 +49,7 @@ export class AuthService {
 
   async checkUsername(dto: UsernameRequest): Promise<object> {
     try {
-      const user = await this.authRepository.findOne(dto.username);
+      const user = await this.authRepository.getUserByUsername(dto.username);
       if (!user) throw new NotFoundException('존재하지 않는 username입니다.');
       return {
         id: user.id,
@@ -54,13 +63,91 @@ export class AuthService {
     }
   }
 
+  async removeRefreshToken(dto: UserIdRequest): Promise<object> {
+    try {
+      await this.authRepository.updateRefreshToken(dto.id, {
+        currentHashedRefreshToken: null,
+      });
+      return {};
+    } catch (error) {
+      this.logger.error(error);
+      throw new BadRequestException(error.getResponse());
+    }
+  }
+
   private async validateUser(
     username: string,
     pass: string,
   ): Promise<UserEntity> {
-    const user = await this.authRepository.findOne(username);
+    const user = await this.authRepository.getUserByUsername(username);
     if (!user) throw new NotFoundException('존재하지 않는 username입니다.');
     if (await argon2.verify(user.password, pass)) return user;
     else throw new BadRequestException('password가 일치하지 않습니다.');
+  }
+
+  getCookieWithJwtAccessToken(id: number) {
+    const payload = { id };
+    const token = this.jwtService.sign(payload, {
+      secret: jwtConstants.access_token_secret,
+      expiresIn: `${jwtConstants.access_token_expiration}s`,
+    });
+
+    return {
+      accessToken: token,
+      domain: 'localhost',
+      path: '/',
+      httpOnly: true,
+      maxAge: Number(jwtConstants.access_token_expiration) * 1000,
+    };
+  }
+
+  getCookieWithJwtRefreshToken(id: number) {
+    const payload = { id };
+    const token = this.jwtService.sign(payload, {
+      secret: jwtConstants.refresh_token_secret,
+      expiresIn: `${jwtConstants.refresh_token_expiration}s`,
+    });
+
+    return {
+      refreshToken: token,
+      domain: 'localhost',
+      path: '/',
+      httpOnly: true,
+      maxAge: Number(jwtConstants.refresh_token_expiration) * 1000,
+    };
+  }
+
+  getCookiesForLogOut() {
+    return {
+      accessOption: {
+        domain: 'localhost',
+        path: '/',
+        httpOnly: true,
+        maxAge: 0,
+      },
+      refreshOption: {
+        domain: 'localhost',
+        path: '/',
+        httpOnly: true,
+        maxAge: 0,
+      },
+    };
+  }
+
+  async setCurrentRefreshToken(refreshToken: string, id: number) {
+    const currentHashedRefreshToken = await argon2.hash(refreshToken);
+    await this.authRepository.updateRefreshToken(id, {
+      currentHashedRefreshToken,
+    });
+  }
+
+  async getUserIfRefreshTokenMatches(refreshToken: string, id: number) {
+    const user = await this.authRepository.getUserById(id);
+    const isRefreshTokenMatching = await argon2.verify(
+      refreshToken,
+      user.currentHashedRefreshToken,
+    );
+
+    if (isRefreshTokenMatching) return user;
   }
 }
