@@ -11,14 +11,14 @@ export class CreateUserSuccessResponse {
 
   @ApiProperty({
     type: 'string',
-    description: 'user의 name입니다.',
+    description: 'user의 이름입니다.',
     example: '강형준',
   })
   name: string;
 
   @ApiProperty({
     type: 'string',
-    description: 'user의 student_id입니다.',
+    description: 'user의 학번입니다.',
     example: '2021440008',
   })
   student_id: string;
