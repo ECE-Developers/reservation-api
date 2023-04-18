@@ -11,13 +11,14 @@ import { UsernameRequest } from '../../libs/request/users/username.request';
 import { UserEntity } from '../../libs/entity/user.entity';
 import { LoginRequest } from '../../libs/request/auth/login.request';
 import * as argon2 from 'argon2';
+import { AuthRepositoryInterface } from './auth.repository.interface';
 
 @Injectable()
 export class AuthService {
   logger = new Logger();
   constructor(
     private jwtService: JwtService,
-    private authRepository: AuthRepository,
+    private authRepository: AuthRepositoryInterface,
   ) {}
 
   async login(dto: LoginRequest): Promise<object> {

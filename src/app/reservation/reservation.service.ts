@@ -11,13 +11,14 @@ import { DataSource } from 'typeorm';
 import { ReservationEntity } from '../../libs/entity/reservation.entity';
 import { UserEntity } from '../../libs/entity/user.entity';
 import * as moment from 'moment';
+import { ReservationRepositoryInterface } from './reservation.repository.interface';
 
 @Injectable()
 export class ReservationService {
   logger = new Logger();
 
   constructor(
-    private readonly reservationRepository: ReservationRepository,
+    private readonly reservationRepository: ReservationRepositoryInterface,
     private readonly dataSource: DataSource,
   ) {}
 
