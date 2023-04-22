@@ -3,6 +3,7 @@ import {
   Logger,
   InternalServerErrorException,
   NotFoundException,
+  Inject,
 } from '@nestjs/common';
 import { ReservationRepository } from './reservation.repository';
 import { ReservationUserIdRequest } from '../../libs/request/reservations/reservation-user-id.request';
@@ -18,6 +19,7 @@ export class ReservationService {
   logger = new Logger();
 
   constructor(
+    @Inject('impl')
     private readonly reservationRepository: ReservationRepositoryInterface,
     private readonly dataSource: DataSource,
   ) {}

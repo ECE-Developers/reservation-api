@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  Inject,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -18,6 +19,7 @@ export class AuthService {
   logger = new Logger();
   constructor(
     private jwtService: JwtService,
+    @Inject('impl')
     private authRepository: AuthRepositoryInterface,
   ) {}
 

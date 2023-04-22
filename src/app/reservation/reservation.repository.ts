@@ -2,9 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { UserEntity } from '../../libs/entity/user.entity';
 import { ReservationEntity } from '../../libs/entity/reservation.entity';
+import { ReservationRepositoryInterface } from './reservation.repository.interface';
 
 @Injectable()
-export class ReservationRepository {
+export class ReservationRepository implements ReservationRepositoryInterface {
   constructor(private readonly dataSource: DataSource) {}
   async getReservations(date: string): Promise<object[]> {
     try {

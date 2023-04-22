@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { UserEntity } from '../../libs/entity/user.entity';
+import { UpdateUserRequest } from '../../libs/request/users/update-user.request';
+import { UserRepositoryInterface } from './user.repository.interface';
 
 @Injectable()
-export class UserRepository {
+export class UserRepository implements UserRepositoryInterface {
   constructor(private readonly dataSource: DataSource) {}
 
   async getUserOne(userId: number): Promise<UserEntity> {
@@ -21,7 +23,7 @@ export class UserRepository {
     }
   }
 
-  async updateUserPassword(dto) {
+  async updateUserPassword(dto: UpdateUserRequest) {
     try {
       const data = {
         password: dto.new_password,

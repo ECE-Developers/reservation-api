@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  Inject,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -13,12 +14,14 @@ import { UserEntity } from '../../libs/entity/user.entity';
 import { DataSource } from 'typeorm';
 import { UserIdRequest } from '../../libs/request/users/user-id.request';
 import * as argon2 from 'argon2';
+import { UserRepositoryInterface } from './user.repository.interface';
 
 @Injectable()
 export class UserService {
   private logger = new Logger();
   constructor(
-    private readonly userRepository: UserRepository,
+    @Inject('impl')
+    private readonly userRepository: UserRepositoryInterface,
     private readonly dataSource: DataSource,
   ) {}
 

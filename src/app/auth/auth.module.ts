@@ -18,7 +18,11 @@ import { AuthRepository } from './auth.repository';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, AuthRepository, JwtStrategy],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    { useClass: AuthRepository, provide: 'impl' },
+  ],
   exports: [AuthService],
 })
 export class AuthModule {}
