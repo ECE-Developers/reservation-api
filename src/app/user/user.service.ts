@@ -6,7 +6,6 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { UserRepository } from './user.repository';
 import { deleteUserRequest } from '../../libs/request/users/delete-user.request';
 import { CreateUserRequest } from '../../libs/request/users/create-user.request';
 import { UpdateUserRequest } from '../../libs/request/users/update-user.request';

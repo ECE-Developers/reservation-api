@@ -5,7 +5,6 @@ import {
   NotFoundException,
   Inject,
 } from '@nestjs/common';
-import { ReservationRepository } from './reservation.repository';
 import { ReservationUserIdRequest } from '../../libs/request/reservations/reservation-user-id.request';
 import { CreateReservationRequest } from '../../libs/request/reservations/create-reservation.request';
 import { DataSource } from 'typeorm';
