@@ -7,7 +7,6 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { AuthRepository } from './auth.repository';
 import { UsernameRequest } from '../../libs/request/users/username.request';
 import { UserEntity } from '../../libs/entity/user.entity';
 import { LoginRequest } from '../../libs/request/auth/login.request';
