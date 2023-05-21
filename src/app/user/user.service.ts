@@ -14,6 +14,10 @@ import { DataSource } from 'typeorm';
 import { UserIdRequest } from '../../libs/request/users/user-id.request';
 import * as argon2 from 'argon2';
 import { UserRepositoryInterface } from './user.repository.interface';
+import { ReadUserSuccessResponse } from '../../libs/response/users/read-user.success.response';
+import { CreateUserSuccessResponse } from '../../libs/response/users/create-user.success.response';
+import { UpdateUserSuccessResponse } from '../../libs/response/users/update-user.success.response';
+import { DeleteUserSuccessResponse } from '../../libs/response/users/delete-user.success.response';
 
 @Injectable()
 export class UserService {
@@ -24,11 +28,11 @@ export class UserService {
     private readonly dataSource: DataSource,
   ) {}
 
-  async getUserOne(dto: UserIdRequest): Promise<UserEntity> {
+  async getUserOne(dto: UserIdRequest): Promise<ReadUserSuccessResponse> {
     try {
       const user = await this.userRepository.getUserOne(dto.id);
       if (!user) throw new NotFoundException('존재하지 않는 사용자입니다.');
-      return user;
+      return new ReadUserSuccessResponse(user);
     } catch (error) {
       this.logger.error(error);
       if (error instanceof NotFoundException)
@@ -36,7 +40,7 @@ export class UserService {
       throw new InternalServerErrorException(error.getResponse());
     }
   }
-  async signUp(dto: CreateUserRequest): Promise<UserEntity> {
+  async signUp(dto: CreateUserRequest): Promise<CreateUserSuccessResponse> {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
@@ -44,7 +48,8 @@ export class UserService {
     try {
       await queryRunner.manager.save(await this.makeUserEntity(dto));
       await queryRunner.commitTransaction();
-      return this.userRepository.getUserByUsername(dto.username);
+      const user = this.userRepository.getUserByUsername(dto.username);
+      return new CreateUserSuccessResponse(user.id, user.name, user.student_id);
     } catch (error) {
       this.logger.error(error);
       await queryRunner.rollbackTransaction();
@@ -54,7 +59,7 @@ export class UserService {
     }
   }
 
-  async updateUser(dto: UpdateUserRequest): Promise<object> {
+  async updateUser(dto: UpdateUserRequest): Promise<UpdateUserSuccessResponse> {
     try {
       const user = await this.userRepository.getUserByUsername(dto.username);
       if (!user)
@@ -64,12 +69,12 @@ export class UserService {
         await this.userRepository.updateUserPassword(dto);
       else throw new BadRequestException('입력 형식이 잘못되었습니다.');
 
-      return {
-        id: user.id,
-        name: user.name,
-        student_id: user.student_id,
-        massage: 'user의 password가 성공적으로 변경됐습니다.',
-      };
+      return new UpdateUserSuccessResponse(
+        user.id,
+        user.name,
+        user.student_id,
+        'user의 password가 성공적으로 변경됐습니다.',
+      );
     } catch (error) {
       this.logger.error(error);
       if (error instanceof BadRequestException)
@@ -79,16 +84,18 @@ export class UserService {
       throw new InternalServerErrorException(error.getResponse());
     }
   }
-  async deleteUser(dto: deleteUserRequest): Promise<object> {
+  async deleteUser(dto: deleteUserRequest): Promise<DeleteUserSuccessResponse> {
     try {
       const user = await this.userRepository.getUserByUsername(dto.username);
       if (!user)
         throw new NotFoundException('존재하지 않는 사용자를 조회했습니다.');
       await this.userRepository.deleteUser(dto.username);
-      return {
-        statusCode: 200,
-        message: '성공적으로 삭제됐습니다.',
-      };
+      return new DeleteUserSuccessResponse(
+        200,
+        '성공적으로 삭제됐습니다.',
+        user.id,
+        user.username,
+      );
     } catch (error) {
       this.logger.error(error);
       if (error instanceof NotFoundException)

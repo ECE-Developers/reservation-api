@@ -1,4 +1,5 @@
 import { ApiExtraModels, ApiProperty } from '@nestjs/swagger';
+import { UserEntity } from '../../entity/user.entity';
 
 @ApiExtraModels()
 export class ReadUserSuccessResponse {
@@ -13,18 +14,6 @@ export class ReadUserSuccessResponse {
     example: 'marsboy',
   })
   username: string;
-
-  @ApiProperty({
-    type: 'string',
-    example: 'iamfrommars',
-  })
-  password: string;
-
-  @ApiProperty({
-    type: 'string',
-    example: '2021440008',
-  })
-  student_id: string;
 
   @ApiProperty({
     type: 'string',
@@ -44,15 +33,11 @@ export class ReadUserSuccessResponse {
   })
   type: string;
 
-  @ApiProperty({
-    type: 'date',
-    example: '2023-02-07T03:28:55.123Z',
-  })
-  created_at: Date;
-
-  @ApiProperty({
-    type: 'date',
-    example: 'null',
-  })
-  updated_at: Date;
+  constructor(user: UserEntity) {
+    this.id = user.id;
+    this.username = user.username;
+    this.name = user.name;
+    this.email = user.email;
+    this.type = user.type;
+  }
 }

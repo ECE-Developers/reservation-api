@@ -22,4 +22,10 @@ export class CreateUserSuccessResponse {
     example: '2021440008',
   })
   student_id: string;
+
+  constructor(id: number, name: string, student_id: string) {
+    this.id = id;
+    this.name = name;
+    this.student_id = student_id;
+  }
 }

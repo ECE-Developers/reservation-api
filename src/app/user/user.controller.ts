@@ -54,7 +54,7 @@ export class UserController {
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: 'user의 정보를 조회합니다.' })
-  async getUser(@Param() dto: UserIdRequest): Promise<UserEntity> {
+  async getUser(@Param() dto: UserIdRequest): Promise<ReadUserSuccessResponse> {
     return await this.userService.getUserOne(dto);
   }
   @Post()
@@ -67,7 +67,9 @@ export class UserController {
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: '계정 생성' })
-  async signUp(@Body() dto: CreateUserRequest): Promise<UserEntity> {
+  async signUp(
+    @Body() dto: CreateUserRequest,
+  ): Promise<CreateUserSuccessResponse> {
     return await this.userService.signUp(dto);
   }
 
@@ -93,8 +95,10 @@ export class UserController {
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: '계정 비밀번호 변경' })
-  updateUser(@Body() body: UpdateUserRequest): object {
-    return this.userService.updateUser(body);
+  async updateUser(
+    @Body() body: UpdateUserRequest,
+  ): Promise<UpdateUserSuccessResponse> {
+    return await this.userService.updateUser(body);
   }
   @Delete()
   @UseGuards(JwtAuthGuard)
@@ -116,7 +120,9 @@ export class UserController {
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: '계정 삭제' })
-  deleteUser(@Body() dto: deleteUserRequest): object {
-    return this.userService.deleteUser(dto);
+  async deleteUser(
+    @Body() dto: deleteUserRequest,
+  ): Promise<DeleteUserSuccessResponse> {
+    return await this.userService.deleteUser(dto);
   }
 }
