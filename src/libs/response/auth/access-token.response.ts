@@ -15,4 +15,9 @@ export class AccessTokenResponse {
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hcnNib3kiLCJwYXNzd29yZCI6ImlhbWZyb21tYXJzIiwiaWF0IjoxNjc1MzA3OTU1LCJleHAiOjE2NzUzMDgwMTV9.FaJ8LrSdX4h5t89kt2fnZBz8FVNH__DF3a_ciwSGYgM',
   })
   access_token: string;
+
+  constructor(user_id: number, access_token: string) {
+    this.user_id = user_id;
+    this.access_token = access_token;
+  }
 }

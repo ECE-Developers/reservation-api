@@ -57,7 +57,7 @@ export class AuthController {
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: 'username과 password를 통해 로그인합니다.' })
-  async login(@Body() dto: LoginRequest): Promise<object> {
+  async login(@Body() dto: LoginRequest): Promise<AccessTokenResponse> {
     return this.authService.login(dto);
   }
 
@@ -80,7 +80,7 @@ export class AuthController {
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: 'jwt access token의 적용 유무를 확인합니다.' })
-  getProfile(@Req() req): object {
+  getProfile(@Req() req): JwtResponse {
     return req.user;
   }
 
@@ -104,7 +104,9 @@ export class AuthController {
   @ApiOperation({
     summary: 'username을 통해 user의 id와 name을 조회하여 중복을 확인합니다.',
   })
-  checkUsername(@Param() dto: UsernameRequest): object {
-    return this.authService.checkUsername(dto);
+  async checkUsername(
+    @Param() dto: UsernameRequest,
+  ): Promise<CheckUsernameSuccessResponse> {
+    return await this.authService.checkUsername(dto);
   }
 }
