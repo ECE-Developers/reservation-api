@@ -33,7 +33,6 @@ import { ReadUserSuccessResponse } from '../../libs/response/users/read-user.suc
 import { UpdateUserSuccessResponse } from '../../libs/response/users/update-user.success.response';
 import { DeleteUserSuccessResponse } from '../../libs/response/users/delete-user.success.response';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
-import { UserEntity } from '../../libs/entity/user.entity';
 
 @Controller('users')
 @ApiTags('User')
