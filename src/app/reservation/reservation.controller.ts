@@ -28,6 +28,7 @@ import { GetUserReservationsResponse } from '../../libs/response/reservations/ge
 import { DeleteReservationResponse } from '../../libs/response/reservations/delete-reservation.response';
 import { ReservationUserIdRequest } from '../../libs/request/reservations/reservation-user-id.request';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
+import { CreateReservationResponse } from '../../libs/response/reservations/create-reservation.response';
 
 @Controller('reservations')
 @ApiTags('Reservation')
@@ -50,8 +51,8 @@ export class ReservationController {
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: 'reservation을 모두 조회합니다.' })
-  getReservations(): object {
-    return this.reservationService.getReservations();
+  async getReservations(): Promise<GetReservationsResponse> {
+    return await this.reservationService.getReservations();
   }
 
   @Post(':user_id')
@@ -59,7 +60,7 @@ export class ReservationController {
   @ApiBearerAuth('access_token')
   @ApiCreatedResponse({
     description: 'reservation이 생성되었습니다.',
-    type: CreatedSuccess,
+    type: CreateReservationResponse,
   })
   @ApiUnauthorizedResponse({
     description: '인증에 실패한 경우',
@@ -70,11 +71,11 @@ export class ReservationController {
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: 'reservation을 생성합니다.' })
-  createReservation(
+  async createReservation(
     @Body() body: CreateReservationRequest,
     @Param() param: ReservationUserIdRequest,
-  ): object {
-    return this.reservationService.createReservation(body, param);
+  ): Promise<CreateReservationResponse> {
+    return await this.reservationService.createReservation(body, param);
   }
 
   @Get(':user_id')
@@ -97,8 +98,10 @@ export class ReservationController {
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: 'reservation을 하나 조회합니다.' })
-  getReservationOne(@Param() dto: ReservationUserIdRequest): object {
-    return this.reservationService.getReservationMany(dto);
+  async getReservationOne(
+    @Param() dto: ReservationUserIdRequest,
+  ): Promise<GetUserReservationsResponse> {
+    return await this.reservationService.getReservationMany(dto);
   }
 
   @Delete(':user_id')
@@ -121,7 +124,9 @@ export class ReservationController {
     type: InternalServerErrorError,
   })
   @ApiOperation({ summary: 'reservation을 모두 삭제합니다.' })
-  deleteReservation(@Param() param: ReservationUserIdRequest): object {
+  async deleteReservation(
+    @Param() param: ReservationUserIdRequest,
+  ): Promise<DeleteReservationResponse> {
     return this.reservationService.deleteReservation(param);
   }
 }

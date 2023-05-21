@@ -15,4 +15,18 @@ export class DeleteReservationResponse {
     example: '해당 reservation이 성공적으로 삭제되었습니다.',
   })
   message: string;
+
+  @ApiProperty({
+    type: 'number',
+    description: 'user의 id입니다.',
+    example: '1',
+  })
+  id: number;
+
+  @ApiProperty({
+    type: 'string',
+    description: 'user의 username입니다.',
+    example: 'marsboy',
+  })
+  username: string;
 }

@@ -33,5 +33,12 @@ export class GetUserReservationsResponse {
       },
     ],
   })
-  reservations: JSON[];
+  reservations: Array<ReservationResponse>;
+}
+
+export class ReservationResponse {
+  id: number;
+  date: string;
+  table_name: string;
+  times: Array<number>;
 }

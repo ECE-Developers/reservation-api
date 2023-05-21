@@ -20,7 +20,7 @@ export class GetReservationsResponse {
       },
     ],
   })
-  today: object[];
+  today: Array<DateResponse>;
 
   @ApiProperty({
     type: 'array',
@@ -34,7 +34,7 @@ export class GetReservationsResponse {
       },
     ],
   })
-  tomorrow: string;
+  tomorrow: Array<DateResponse>;
 
   @ApiProperty({
     type: 'array',
@@ -48,5 +48,11 @@ export class GetReservationsResponse {
       },
     ],
   })
-  dayAfterTomorrow: string;
+  dayAfterTomorrow: Array<DateResponse>;
+}
+
+export class DateResponse {
+  id: number;
+  table_name: string;
+  times: Array<number>;
 }
