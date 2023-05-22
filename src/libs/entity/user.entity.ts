@@ -1,6 +1,8 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ReservationEntity } from './reservation.entity';
 import * as moment from 'moment/moment';
+import { CreateUserRequest } from '../request/users/create-user.request';
+import * as argon2 from 'argon2';
 
 @Entity('user')
 export class UserEntity {
@@ -33,4 +35,13 @@ export class UserEntity {
 
   @OneToMany((type) => ReservationEntity, (reservation) => reservation.user)
   Reservations: ReservationEntity[];
+
+  async makeUserEntity(dto: CreateUserRequest): Promise<UserEntity> {
+    const user = new UserEntity();
+    user.username = dto.username;
+    user.password = await argon2.hash(dto.password);
+    user.name = dto.name;
+    user.studentId = dto.student_id;
+    return user;
+  }
 }

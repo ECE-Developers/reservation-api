@@ -9,15 +9,14 @@ import {
 import { deleteUserRequest } from '../../libs/request/users/delete-user.request';
 import { CreateUserRequest } from '../../libs/request/users/create-user.request';
 import { UpdateUserRequest } from '../../libs/request/users/update-user.request';
-import { UserEntity } from '../../libs/entity/user.entity';
 import { DataSource } from 'typeorm';
 import { UserIdRequest } from '../../libs/request/users/user-id.request';
-import * as argon2 from 'argon2';
 import { UserRepositoryInterface } from './user.repository.interface';
 import { ReadUserSuccessResponse } from '../../libs/response/users/read-user.success.response';
 import { CreateUserSuccessResponse } from '../../libs/response/users/create-user.success.response';
 import { UpdateUserSuccessResponse } from '../../libs/response/users/update-user.success.response';
 import { DeleteUserSuccessResponse } from '../../libs/response/users/delete-user.success.response';
+import { UserEntity } from '../../libs/entity/user.entity';
 
 @Injectable()
 export class UserService {
@@ -26,6 +25,7 @@ export class UserService {
     @Inject('impl')
     private readonly userRepository: UserRepositoryInterface,
     private readonly dataSource: DataSource,
+    private readonly userEntity: UserEntity,
   ) {}
 
   async getUserOne(dto: UserIdRequest): Promise<ReadUserSuccessResponse> {
@@ -46,7 +46,7 @@ export class UserService {
     await queryRunner.startTransaction();
 
     try {
-      await queryRunner.manager.save(await this.makeUserEntity(dto));
+      await queryRunner.manager.save(await this.userEntity.makeUserEntity(dto));
       await queryRunner.commitTransaction();
       const user = this.userRepository.getUserByUsername(dto.username);
       return new CreateUserSuccessResponse(user.id, user.name, user.student_id);
@@ -102,14 +102,5 @@ export class UserService {
         throw new NotFoundException(error.getResponse());
       throw new InternalServerErrorException(error.getResponse());
     }
-  }
-
-  private async makeUserEntity(dto: CreateUserRequest): Promise<UserEntity> {
-    const user = new UserEntity();
-    user.username = dto.username;
-    user.password = await argon2.hash(dto.password);
-    user.name = dto.name;
-    user.studentId = dto.student_id;
-    return user;
   }
 }
