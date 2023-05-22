@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm';
 import { UserEntity } from '../../libs/entity/user.entity';
 import { UpdateUserRequest } from '../../libs/request/users/update-user.request';
 import { UserRepositoryInterface } from './user.repository.interface';
+import * as argon2 from 'argon2';
 
 @Injectable()
 export class UserRepository implements UserRepositoryInterface {
@@ -26,7 +27,7 @@ export class UserRepository implements UserRepositoryInterface {
   async updateUserPassword(dto: UpdateUserRequest) {
     try {
       const data = {
-        password: dto.new_password,
+        password: await argon2.hash(dto.new_password),
       };
       await this.updateUser(data, dto.student_id);
     } catch (error) {
