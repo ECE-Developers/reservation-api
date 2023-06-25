@@ -8,7 +8,7 @@
 
 - node 패키지 매니저로 npm을 사용합니다.
 - node: v18.7.0
-- npm: 9.1.1
+- npm: 9.7.2
 
 Version Checking
 
