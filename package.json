@@ -25,8 +25,6 @@
     "migration:down": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:revert -d ./src/data-source.ts"
   },
   "dependencies": {
-    "@adminjs/express": "^5.1.0",
-    "@adminjs/nestjs": "^5.1.1",
     "@jridgewell/sourcemap-codec": "^1.4.14",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
@@ -34,7 +32,7 @@
     "@nestjs/jwt": "^10.0.1",
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
-    "@nestjs/swagger": "^5.2.1",
+    "@nestjs/swagger": "^6.3.0",
     "@nestjs/typeorm": "^9.0.1",
     "argon2": "^0.30.3",
     "class-transformer": "^0.5.1",
@@ -57,7 +55,6 @@
     "@nestjs/testing": "^9.0.0",
     "@types/express": "^4.17.13",
     "@types/jest": "28.1.8",
-    "@types/multer": "^1.4.7",
     "@types/node": "^16.0.0",
     "@types/passport-jwt": "^3.0.8",
     "@types/supertest": "^2.0.11",
