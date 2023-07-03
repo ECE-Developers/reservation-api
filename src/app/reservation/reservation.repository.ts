@@ -15,7 +15,7 @@ export class ReservationRepository implements ReservationRepositoryInterface {
     }
   }
 
-  async deleteReservation(userId: number) {
+  async deleteReservation(userId: number): Promise<void> {
     try {
       await this.deleteReservationById(userId);
     } catch (error) {
@@ -80,7 +80,7 @@ export class ReservationRepository implements ReservationRepositoryInterface {
       .where(`Reservation.id =:ReservationId`, { reservationId })
       .getRawOne();
   }
-  private async deleteReservationById(userId: number) {
+  private async deleteReservationById(userId: number): Promise<void> {
     await this.dataSource
       .createQueryBuilder()
       .delete()

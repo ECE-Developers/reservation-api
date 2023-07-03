@@ -16,7 +16,7 @@ export class UserRepository implements UserRepositoryInterface {
       throw error;
     }
   }
-  async getUserByUsername(username: string): Promise<any> {
+  async getUserByUsername(username: string): Promise<UserEntity> {
     try {
       return await this.getUserOneByUsername(username);
     } catch (error) {
@@ -24,7 +24,7 @@ export class UserRepository implements UserRepositoryInterface {
     }
   }
 
-  async updateUserPassword(dto: UpdateUserRequest) {
+  async updateUserPassword(dto: UpdateUserRequest): Promise<void> {
     try {
       const data = {
         password: await argon2.hash(dto.new_password),
@@ -35,7 +35,7 @@ export class UserRepository implements UserRepositoryInterface {
     }
   }
 
-  async deleteUser(username: string) {
+  async deleteUser(username: string): Promise<void> {
     try {
       await this.deleteUserOne(username);
     } catch (error) {
