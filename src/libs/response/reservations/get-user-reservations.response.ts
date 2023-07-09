@@ -34,6 +34,11 @@ export class GetUserReservationsResponse {
     ],
   })
   reservations: Array<ReservationResponse>;
+
+  constructor(user_id: number, reservations: Array<ReservationResponse>) {
+    this.user_id = user_id;
+    this.reservations = reservations;
+  }
 }
 
 export class ReservationResponse {

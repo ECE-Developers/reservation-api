@@ -29,4 +29,16 @@ export class CreateReservationResponse {
     example: '성공적으로 예약이 접수되었습니다',
   })
   message: string;
+
+  constructor(
+    id: number,
+    username: string,
+    statusCode: number,
+    message: string,
+  ) {
+    this.id = id;
+    this.username = username;
+    this.statusCode = statusCode;
+    this.message = message;
+  }
 }

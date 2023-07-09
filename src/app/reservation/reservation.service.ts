@@ -38,11 +38,7 @@ export class ReservationService {
       const dayAfterTomorrow = await this.reservationRepository.getReservations(
         moment().add(2, 'days').format('YYYY-MM-DD'),
       );
-      return {
-        today,
-        tomorrow,
-        dayAfterTomorrow,
-      };
+      return new GetReservationsResponse(today, tomorrow, dayAfterTomorrow);
     } catch (error) {
       this.logger.error(error);
       throw new InternalServerErrorException(error.getResponse());
@@ -58,10 +54,7 @@ export class ReservationService {
       const reservations = await this.reservationRepository.getReservationMany(
         dto.user_id,
       );
-      return {
-        user_id: dto.user_id,
-        reservations: reservations,
-      };
+      return new GetUserReservationsResponse(dto.user_id, reservations);
     } catch (error) {
       this.logger.error(error);
       if (error instanceof NotFoundException)
@@ -84,12 +77,12 @@ export class ReservationService {
       await queryRunner.manager.save(this.makeReservationEntity(dto, user));
       await queryRunner.commitTransaction();
 
-      return {
-        id: user.id,
-        username: user.username,
-        statusCode: 201,
-        message: '성공적으로 예약이 접수되었습니다',
-      };
+      return new CreateReservationResponse(
+        user.id,
+        user.username,
+        201,
+        '성공적으로 예약이 접수되었습니다',
+      );
     } catch (error) {
       this.logger.error(error);
       await queryRunner.rollbackTransaction();
@@ -108,12 +101,12 @@ export class ReservationService {
       const user = this.reservationRepository.getUserOne(dto.user_id);
       if (!user) throw new NotFoundException('존재하지 않는 user입니다.');
       await this.reservationRepository.deleteReservation(dto.user_id);
-      return {
-        statusCode: 200,
-        message: '해당 reservation이 성공적으로 삭제되었습니다.',
-        id: user.id,
-        username: user.username,
-      };
+      return new DeleteReservationResponse(
+        200,
+        '해당 reservation이 성공적으로 삭제되었습니다.',
+        user.id,
+        user.username,
+      );
     } catch (error) {
       this.logger.error(error);
       if (error instanceof NotFoundException)

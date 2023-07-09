@@ -49,6 +49,16 @@ export class GetReservationsResponse {
     ],
   })
   dayAfterTomorrow: Array<DateResponse>;
+
+  constructor(
+    today: Array<DateResponse>,
+    tomorrow: Array<DateResponse>,
+    dayAfterTomorrow: Array<DateResponse>,
+  ) {
+    this.today = today;
+    this.tomorrow = tomorrow;
+    this.dayAfterTomorrow = dayAfterTomorrow;
+  }
 }
 
 export class DateResponse {

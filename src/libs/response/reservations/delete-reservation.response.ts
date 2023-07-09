@@ -29,4 +29,16 @@ export class DeleteReservationResponse {
     example: 'marsboy',
   })
   username: string;
+
+  constructor(
+    statusCode: number,
+    message: string,
+    id: number,
+    username: string,
+  ) {
+    this.statusCode = statusCode;
+    this.message = message;
+    this.id = id;
+    this.username = username;
+  }
 }
